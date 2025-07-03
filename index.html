@@ -64,7 +64,7 @@
 
 <h2>Quiz มิติสัมพันธ์</h2>
 <div id="quiz-container">
-  <div id="question-number"></div> <!-- ✅ เพิ่มแสดงเลขข้อ -->
+  <div id="question-number"></div>
   <img id="question-img" src="" alt="โจทย์" />
   <div id="options"></div>
   <div id="message"></div>
@@ -73,65 +73,64 @@
 <script>
 const quizData = [
   {
-    img: 'https://i.imgur.com/zQW1Qnl.png',
-    options: ['กล่อง A', 'กล่อง B', 'กล่อง C', 'กล่อง D'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
     img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือก 1', 'ตัวเลือก 2', 'ตัวเลือก 3', 'ตัวเลือก 4'],
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/xvhrM1q.png',
-    options: ['แบบที่ 1', 'แบบที่ 2', 'แบบที่ 3', 'แบบที่ 4'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/oPqYbiJ.png',
-    options: ['กล่อง A', 'กล่อง B', 'กล่อง C', 'กล่อง D'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/9Vo1yRJ.png',
-    options: ['A', 'B', 'C', 'D'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/nK0DfFi.png',
-    options: ['ตัวเลือก ก', 'ตัวเลือก ข', 'ตัวเลือก ค', 'ตัวเลือก ง'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/doxglHd.png',
-    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/MVv0kMd.png',
-    options: ['ภาพที่ 1', 'ภาพที่ 2', 'ภาพที่ 3', 'ภาพที่ 4'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/wIsZK9R.png',
-    options: ['เลือก 1', 'เลือก 2', 'เลือก 3', 'เลือก 4'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   },
   {
-    img: 'https://i.imgur.com/JVKsCka.png',
-    options: ['ก', 'ข', 'ค', 'ง'],
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
     correct: 0
   }
 ];
 
 let currentQuestion = 0;
 let lock = false;
+let countdownInterval = null;
 
 function loadQuestion() {
   lock = false;
   document.getElementById('message').textContent = '';
-
-  // ✅ แสดงเลขข้อ
   document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
 
   const q = quizData[currentQuestion];
@@ -146,6 +145,22 @@ function loadQuestion() {
     btn.disabled = lock;
     optionsDiv.appendChild(btn);
   });
+}
+
+function startCountdown(seconds) {
+  let remaining = seconds;
+  document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว ${remaining} วิ`;
+  countdownInterval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(countdownInterval);
+      lock = false;
+      document.getElementById('message').textContent = '';
+      document.querySelectorAll('#options button').forEach(b => b.disabled = false);
+    } else {
+      document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว ${remaining} วิ`;
+    }
+  }, 1000);
 }
 
 function answer(selected) {
@@ -165,17 +180,10 @@ function answer(selected) {
     }
   } else {
     lock = true;
-    document.getElementById('message').textContent = 'เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว 10 วิ';
-    const buttons = document.querySelectorAll('#options button');
-    buttons.forEach(b => b.disabled = true);
-    setTimeout(() => {
-      lock = false;
-      document.getElementById('message').textContent = '';
-      buttons.forEach(b => b.disabled = false);
-    }, 10000);
+    document.querySelectorAll('#options button').forEach(b => b.disabled = true);
+    startCountdown(10);
   }
 }
-
 
 loadQuestion();
 </script>
