@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quiz มิติสัมพันธ์</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: auto;
+    padding: 10px;
+    background: #f0f4f8;
+    color: #222;
+  }
+  h2 {
+    text-align: center;
+  }
+  #quiz-container {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  #question-number {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  button {
+    width: 100%;
+    margin: 6px 0;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #21d6c1;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  button:hover:not(:disabled) {
+    background-color: #25fbe2;
+  }
+  button:disabled {
+    background-color: #999999;
+    cursor: not-allowed;
+  }
+  #message {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #d62828;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h2>Quiz มิติสัมพันธ์</h2>
+<div id="quiz-container">
+  <div id="question-number"></div> <!-- ✅ เพิ่มแสดงเลขข้อ -->
+  <img id="question-img" src="" alt="โจทย์" />
+  <div id="options"></div>
+  <div id="message"></div>
+</div>
+
+<script>
+const quizData = [
+  {
+    img: 'https://i.imgur.com/zQW1Qnl.png',
+    options: ['กล่อง A', 'กล่อง B', 'กล่อง C', 'กล่อง D'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/6bGzN1Q.png',
+    options: ['ตัวเลือก 1', 'ตัวเลือก 2', 'ตัวเลือก 3', 'ตัวเลือก 4'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/xvhrM1q.png',
+    options: ['แบบที่ 1', 'แบบที่ 2', 'แบบที่ 3', 'แบบที่ 4'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/oPqYbiJ.png',
+    options: ['กล่อง A', 'กล่อง B', 'กล่อง C', 'กล่อง D'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/9Vo1yRJ.png',
+    options: ['A', 'B', 'C', 'D'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/nK0DfFi.png',
+    options: ['ตัวเลือก ก', 'ตัวเลือก ข', 'ตัวเลือก ค', 'ตัวเลือก ง'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/doxglHd.png',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/MVv0kMd.png',
+    options: ['ภาพที่ 1', 'ภาพที่ 2', 'ภาพที่ 3', 'ภาพที่ 4'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/wIsZK9R.png',
+    options: ['เลือก 1', 'เลือก 2', 'เลือก 3', 'เลือก 4'],
+    correct: 0
+  },
+  {
+    img: 'https://i.imgur.com/JVKsCka.png',
+    options: ['ก', 'ข', 'ค', 'ง'],
+    correct: 0
+  }
+];
+
+let currentQuestion = 0;
+let lock = false;
+
+function loadQuestion() {
+  lock = false;
+  document.getElementById('message').textContent = '';
+
+  // ✅ แสดงเลขข้อ
+  document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
+
+  const q = quizData[currentQuestion];
+  document.getElementById('question-img').src = q.img;
+
+  const optionsDiv = document.getElementById('options');
+  optionsDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => answer(i);
+    btn.disabled = lock;
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function answer(selected) {
+  if (lock) return;
+  const correct = quizData[currentQuestion].correct;
+  if (selected === correct) {
+    currentQuestion++;
+    if (currentQuestion >= quizData.length) {
+      document.getElementById('quiz-container').innerHTML = `
+        <h3 style="text-align:center; color:green;">เหมือนมีข้อมูลจำนวนมากหลั่งไหลเข้ามาเลย</h3>
+        <p style="text-align:center; margin-top: 20px;">
+          👉 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#3a86ff; font-weight:bold;">นี่มัน.. ตำราสมุนไพร!!!</a>
+        </p>
+      `;
+    } else {
+      loadQuestion();
+    }
+  } else {
+    lock = true;
+    document.getElementById('message').textContent = 'เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว 10 วิ';
+    const buttons = document.querySelectorAll('#options button');
+    buttons.forEach(b => b.disabled = true);
+    setTimeout(() => {
+      lock = false;
+      document.getElementById('message').textContent = '';
+      buttons.forEach(b => b.disabled = false);
+    }, 10000);
+  }
+}
+
+
+loadQuestion();
+</script>
+
+</body>
+</html>
