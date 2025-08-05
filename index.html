@@ -37,7 +37,7 @@
     text-align: center;
     margin-bottom: 15px;
   }
-  button {
+  #options button {
     width: 100%;
     margin: 6px 0;
     padding: 12px;
@@ -49,16 +49,16 @@
     color: white;
     transition: 0.3s ease;
   }
-  button:hover:not(:disabled) {
+  #options button:hover:not(:disabled) {
     background-color: #25fbe2;
   }
-  button.correct {
+  #options button.correct {
     background-color: #28a745 !important;
   }
-  button.wrong {
+  #options button.wrong {
     background-color: #dc3545 !important;
   }
-  button:disabled {
+  #options button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
@@ -81,7 +81,24 @@
 </div>
 
 <script>
-const quizData = [...]; // <<< แทนด้วย quizData ทั้ง 20 ข้อของคุณ (ย่อไว้เพื่อไม่ยืดยาว)
+// ตัวอย่าง quizData 3 ข้อ (คุณสามารถเพิ่มเป็น 20 ข้อได้)
+const quizData = [
+  {
+    question: "ต้นไม้ชนิดใดที่มีใบเล็กและมีหนาม?",
+    options: ["มะพร้าว", "กระบองเพชร", "กล้วยไม้", "ตะขบ"],
+    correct: 1
+  },
+  {
+    question: "พืชชนิดใดใช้ในการทำกระดาษ?",
+    options: ["ไผ่", "กล้วย", "ต้นสน", "ต้นยูคาลิปตัส"],
+    correct: 2
+  },
+  {
+    question: "ดอกไม้ชนิดใดเป็นสัญลักษณ์ของความรัก?",
+    options: ["ดอกกุหลาบ", "ดอกบัว", "ดอกลิลลี่", "ดอกทานตะวัน"],
+    correct: 0
+  }
+];
 
 let currentQuestion = 0;
 let lock = false;
