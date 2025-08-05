@@ -124,8 +124,9 @@ h2 {
   <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
   <div class="loader"></div>
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-    กำลังประมวลผลความรู้ของเจ้า... กรุณารอสักครู่ 🌿
-  </p>
+  กำลังโหลดข้อมูล<span id="loading-dots">.</span>
+</p>
+
 </div>
 
 </div>
@@ -283,20 +284,29 @@ function answer(selectedIndex, selectedButton) {
       currentQuestion++;
       if (currentQuestion >= quizData.length) {
   document.getElementById('quiz-container').style.display = 'none';
-  document.getElementById('loading-screen').style.display = 'block';
+document.getElementById('loading-screen').style.display = 'block';
 
-  setTimeout(() => {
-    document.getElementById('loading-screen').style.display = 'none';
-    document.getElementById('quiz-container').style.display = 'block';
-    document.getElementById('quiz-container').innerHTML = `
-      <h3 style="text-align:center; color:#2e7d32;">🌿 ปัญญาแห่งพืชสมุนไพรบังเกิดแล้ว! 🌿</h3>
-      <p style="text-align:center; margin-top: 20px;">
-        📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
-          ไปดูตำราสมุนไพรของเจ้าเลย 🍃
-        </a>
-      </p>
-    `;
-  }, 15000); // 15 วินาที
+let dotCount = 1;
+const loadingDots = document.getElementById('loading-dots');
+const dotInterval = setInterval(() => {
+  dotCount = (dotCount % 3) + 1; // วน 1 ถึง 3
+  loadingDots.textContent = '.'.repeat(dotCount);
+}, 300); // เปลี่ยนจุดทุก 300ms
+
+setTimeout(() => {
+  clearInterval(dotInterval);
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('quiz-container').style.display = 'block';
+  document.getElementById('quiz-container').innerHTML = `
+    <h3 style="text-align:center; color:#2e7d32;">🌿 ปัญญาแห่งพืชสมุนไพรบังเกิดแล้ว! 🌿</h3>
+    <p style="text-align:center; margin-top: 20px;">
+      📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
+        ไปดูตำราสมุนไพรของเจ้าเลย 🍃
+      </a>
+    </p>
+  `;
+}, 15000);
+
       } else {
         loadQuestion();
       }
