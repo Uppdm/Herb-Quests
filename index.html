@@ -16,6 +16,12 @@ body {
   background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
   color: #2e4d2e;
   background-image: url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
+  <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
+  <div class="loader"></div>
+  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
+    กำลังประมวลผลความรู้ของเจ้า... กรุณารอสักครู่ 🌿
+  </p>
+</div>
 
 }
 
@@ -96,6 +102,22 @@ h2 {
   color: #d62828;
   text-align: center;
 }
+
+.loader {
+  border: 6px solid #c8e6c9;
+  border-top: 6px solid #388e3c;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 </style>
 </head>
 <body>
@@ -260,11 +282,22 @@ function answer(selectedIndex, selectedButton) {
     setTimeout(() => {
       currentQuestion++;
       if (currentQuestion >= quizData.length) {
-        document.getElementById('quiz-container').innerHTML = `
-          <h3 style="text-align:center; color:green;">เหมือนมีข้อมูลจำนวนมากหลั่งไหลเข้ามาเลย</h3>
-          <p style="text-align:center; margin-top: 20px;">
-            👉 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#3a86ff; font-weight:bold;">นี่มัน.. ตำราสมุนไพร!!!</a>
-          </p>
+  document.getElementById('quiz-container').style.display = 'none';
+  document.getElementById('loading-screen').style.display = 'block';
+
+  setTimeout(() => {
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('quiz-container').style.display = 'block';
+    document.getElementById('quiz-container').innerHTML = `
+      <h3 style="text-align:center; color:#2e7d32;">🌿 ปัญญาแห่งพืชสมุนไพรบังเกิดแล้ว! 🌿</h3>
+      <p style="text-align:center; margin-top: 20px;">
+        📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
+          ไปดูตำราสมุนไพรของเจ้าเลย 🍃
+        </a>
+      </p>
+    `;
+  }, 15000); // 15 วินาที
+}
         `;
       } else {
         loadQuestion();
@@ -282,4 +315,3 @@ loadQuestion();
 
 </body>
 </html>
-
