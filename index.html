@@ -16,13 +16,6 @@ body {
   background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
   color: #2e4d2e;
   background-image: url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
-  <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
-  <div class="loader"></div>
-  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-    กำลังประมวลผลความรู้ของเจ้า... กรุณารอสักครู่ 🌿
-  </p>
-</div>
-
 }
 
 h2 {
@@ -128,6 +121,13 @@ h2 {
   <div id="question-text"></div>
   <div id="options"></div>
   <div id="message"></div>
+  <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
+  <div class="loader"></div>
+  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
+    กำลังประมวลผลความรู้ของเจ้า... กรุณารอสักครู่ 🌿
+  </p>
+</div>
+
 </div>
 
 <script>
@@ -297,8 +297,6 @@ function answer(selectedIndex, selectedButton) {
       </p>
     `;
   }, 15000); // 15 วินาที
-}
-        `;
       } else {
         loadQuestion();
       }
