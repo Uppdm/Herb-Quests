@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Quiz มิติสัมพันธ์</title>
+<title>ตอบอะไรไหนใครรู้~ ~</title>
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -62,7 +62,7 @@
 </head>
 <body>
 
-<h2>Quiz มิติสัมพันธ์</h2>
+<h2>ตอบอะไรไหนใครรู้~ ~</h2>
 <div id="quiz-container">
   <div id="question-number"></div>
   <img id="question-img" src="" alt="โจทย์" />
@@ -73,56 +73,58 @@
 <script>
 const quizData = [
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'ข้อใดเป็นหน้าที่หลักของรากพืช?',
+    options: ['สร้างอาหาร', 'ลำเลียงน้ำ', 'ดูดน้ำและแร่ธาตุ', 'สร้างเมล็ด'],
+    correct: 2
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'พืชใบเลี้ยงเดี่ยวมีลักษณะใดที่แตกต่างจากใบเลี้ยงคู่?',
+    options: ['มีดอกสีสันสดใส', 'ใบมีเส้นใบแบบขนาน', 'รากเป็นรากแก้ว', 'เมล็ดมี 2 ใบเลี้ยง'],
+    correct: 1
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'การสังเคราะห์แสงของพืชเกิดขึ้นในส่วนใดของเซลล์?',
+    options: ['ไซโทพลาสซึม', 'ไมโทคอนเดรีย', 'คลอโรพลาสต์', 'นิวเคลียส'],
+    correct: 2
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'พืชกลุ่มใดสามารถตรึงไนโตรเจนในดินได้ดี?',
+    options: ['พืชวงศ์หญ้า (Poaceae)', 'พืชวงศ์ถั่ว (Leguminosae)', 'พืชวงศ์กุหลาบ (Rosaceae)', 'พืชน้ำ (Hydrophytes)'],
+    correct: 1
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'โฟลเอ็มในพืชทำหน้าที่ใด?',
+    options: ['ลำเลียงน้ำจากราก', 'ลำเลียงน้ำตาลจากใบไปยังส่วนอื่น', 'ลำเลียงออกซิเจน', 'ควบคุมการสังเคราะห์แสง'],
+    correct: 1
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'ปากใบเปิดเพื่อรับก๊าซอะไรเข้าสู่พืช?',
+    options: ['ออกซิเจน', 'คาร์บอนไดออกไซด์', 'ไนโตรเจน', 'ไอน้ำ'],
+    correct: 1
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'พืชมีการลำเลียงน้ำขึ้นจากรากไปยอดได้อย่างไร?',
+    options: ['การแพร่', 'ความดันรากอย่างเดียว', 'แรงดึงจากการคายน้ำ', 'การหายใจระดับเซลล์'],
+    correct: 2
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'ส่วนใดของพืชมีหน้าที่สังเคราะห์แสงมากที่สุด?',
+    options: ['ดอก', 'ราก', 'ลำต้น', 'ใบ'],
+    correct: 3
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'พืชประเภทใดต่อไปนี้สืบพันธุ์แบบไม่อาศัยเพศตามธรรมชาติได้?',
+    options: ['ทานตะวัน', 'ข้าวโพด', 'มันสำปะหลัง', 'มะละกอ'],
+    correct: 2
   },
   {
-    img: 'https://i.imgur.com/6bGzN1Q.png',
-    options: ['ตัวเลือกที่ 1', 'ตัวเลือกที่ 2', 'ตัวเลือกที่ 3', 'ตัวเลือกที่ 4'],
-    correct: 0
+    question: 'ข้อใดเกี่ยวกับการคายน้ำของพืช "ไม่ถูกต้อง"?',
+    options: ['ช่วยดึงน้ำจากรากขึ้นใบ', 'เกิดที่ปากใบเป็นส่วนใหญ่', 'ทำให้พืชสูญเสียน้ำเกินความจำเป็นเสมอ', 'เกี่ยวข้องกับการควบคุมอุณหภูมิของพืช'],
+    correct: 2
   }
 ];
+</script>
+
 
 let currentQuestion = 0;
 let lock = false;
@@ -149,7 +151,7 @@ function loadQuestion() {
 
 function startCountdown(seconds) {
   let remaining = seconds;
-  document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว ${remaining} วิ`;
+  document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; สตั๊นไป ${remaining} วิ`;
   countdownInterval = setInterval(() => {
     remaining--;
     if (remaining <= 0) {
@@ -190,3 +192,4 @@ loadQuestion();
 
 </body>
 </html>
+
