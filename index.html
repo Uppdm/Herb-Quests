@@ -52,12 +52,15 @@
   #options button:hover:not(:disabled) {
     background-color: #25fbe2;
   }
+  /* 
+  /* เอา CSS สีเขียว/แดงออก (comment ไว้เผื่อต้องการใช้) 
   #options button.correct {
     background-color: #28a745 !important;
   }
   #options button.wrong {
     background-color: #dc3545 !important;
   }
+  */
   #options button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -145,7 +148,8 @@ function answer(selectedIndex, selectedButton) {
   const buttons = document.querySelectorAll('#options button');
 
   if (selectedIndex === correctIndex) {
-    selectedButton.classList.add('correct');
+    // เอา class สีเขียวออก
+    // selectedButton.classList.add('correct');
     setTimeout(() => {
       currentQuestion++;
       if (currentQuestion >= quizData.length) {
@@ -161,8 +165,9 @@ function answer(selectedIndex, selectedButton) {
     }, 600);
   } else {
     lock = true;
-    selectedButton.classList.add('wrong');
-    buttons[correctIndex].classList.add('correct');
+    // เอา class สีแดงและสีเขียวออก
+    // selectedButton.classList.add('wrong');
+    // buttons[correctIndex].classList.add('correct');
     buttons.forEach(b => b.disabled = true);
     startCountdown(10);
   }
