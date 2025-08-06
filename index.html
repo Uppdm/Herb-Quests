@@ -1,210 +1,310 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ตอบอะไรไหนใครรู้~ ~</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ตอบอะไรไหนใครรู้~ ~</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
 
-    body {
-      font-family: 'Sarabun', sans-serif;
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-      background: linear-gradient(to bottom, #e8f5e9, #ffffff);
-      background-image: url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
-      color: #2e4d2e;
-    }
+body {
+  font-family: 'Sarabun', sans-serif;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  background: linear-gradient(to bottom, #e8f5e9, #ffffff);
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  color: #2e4d2e;
+  background-image: url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
+}
 
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #2e7d32;
-      font-weight: bold;
-      font-size: 24px;
-    }
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 24px;
+}
 
-    #quiz-container {
-      background: #ffffffcc;
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(34,139,34,0.2);
-      border: 2px dashed #a5d6a7;
-      position: relative;
-    }
+#quiz-container {
+  background: #ffffffcc;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(34,139,34,0.2);
+  border: 2px dashed #a5d6a7;
+  position: relative;
+}
 
-    #quiz-container::before {
-      content: "🌿";
-      font-size: 32px;
-      position: absolute;
-      top: -20px;
-      left: -20px;
-    }
+#quiz-container::before {
+  content: "🌿";
+  font-size: 32px;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+}
 
-    #quiz-container::after {
-      content: "🍃";
-      font-size: 28px;
-      position: absolute;
-      bottom: -20px;
-      right: -20px;
-    }
+#quiz-container::after {
+  content: "🍃";
+  font-size: 28px;
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+}
 
-    #question-number {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 12px;
-      font-size: 18px;
-      color: #388e3c;
-    }
+#question-number {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #388e3c;
+}
 
-    #question-text {
-      font-size: 20px;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 18px;
-      color: #1b5e20;
-    }
+#question-text {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 18px;
+  color: #1b5e20;
+}
 
-    #options button {
-      width: 100%;
-      margin: 6px 0;
-      padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background-color: #81c784;
-      color: white;
-      transition: 0.3s ease;
-    }
+#options button {
+  width: 100%;
+  margin: 6px 0;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #81c784;
+  color: white;
+  transition: 0.3s ease;
+}
 
-    #options button:hover:not(:disabled) {
-      background-color: #66bb6a;
-    }
+#options button:hover:not(:disabled) {
+  background-color: #66bb6a;
+}
 
-    #options button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+#options button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-    #message {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #d62828;
-      text-align: center;
-    }
+#message {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #d62828;
+  text-align: center;
+}
 
-    #loading-screen {
-      display: none;
-      text-align: center;
-      padding: 50px;
-    }
-  </style>
+</style>
 </head>
 <body>
 
-  <h2>🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
+<h2>🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
+<div id="quiz-container">
+  <div id="question-number"></div>
+  <div id="question-text"></div>
+  <div id="options"></div>
+  <div id="message"></div>
+  <div class="loader"></div>
+  <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
+  <img src="https://media1.tenor.com/m/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif" 
+       alt="loading" width="80" height="80" />
+  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
+    กำลังโหลดข้อมูล<span id="loading-dots">.</span>
+  </p>
+</div>
 
-  <div id="quiz-container">
-    <div id="question-number"></div>
-    <div id="question-text"></div>
-    <div id="options"></div>
-    <div id="message"></div>
-  </div>
 
-  <div id="loading-screen">
-    <img src="https://media1.tenor.com/m/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif" alt="loading" width="80" height="80" />
-    <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-      กำลังโหลดข้อมูล<span id="loading-dots">.</span>
-    </p>
-  </div>
+<script>
+const quizData = [
+  {
+    question: 'ข้อใดเป็นหน้าที่หลักของรากพืช?',
+    options: ['สร้างอาหาร', 'ลำเลียงน้ำ', 'ดูดน้ำและแร่ธาตุ', 'สร้างเมล็ด'],
+    correct: 2
+  },
+  {
+    question: 'พืชใบเลี้ยงเดี่ยวมีลักษณะใดที่แตกต่างจากใบเลี้ยงคู่?',
+    options: ['มีดอกสีสันสดใส', 'ใบมีเส้นใบแบบขนาน', 'รากเป็นรากแก้ว', 'เมล็ดมี 2 ใบเลี้ยง'],
+    correct: 1
+  },
+  {
+    question: 'การสังเคราะห์แสงของพืชเกิดขึ้นในส่วนใดของเซลล์?',
+    options: ['ไซโทพลาสซึม', 'ไมโทคอนเดรีย', 'คลอโรพลาสต์', 'นิวเคลียส'],
+    correct: 2
+  },
+  {
+    question: 'พืชกลุ่มใดสามารถตรึงไนโตรเจนในดินได้ดี?',
+    options: ['พืชวงศ์หญ้า (Poaceae)', 'พืชวงศ์ถั่ว (Leguminosae)', 'พืชวงศ์กุหลาบ (Rosaceae)', 'พืชน้ำ (Hydrophytes)'],
+    correct: 1
+  },
+  {
+    question: 'โฟลเอ็มในพืชทำหน้าที่ใด?',
+    options: ['ลำเลียงน้ำจากราก', 'ลำเลียงน้ำตาลจากใบไปยังส่วนอื่น', 'ลำเลียงออกซิเจน', 'ควบคุมการสังเคราะห์แสง'],
+    correct: 1
+  },
+  {
+    question: 'ปากใบเปิดเพื่อรับก๊าซอะไรเข้าสู่พืช?',
+    options: ['ออกซิเจน', 'คาร์บอนไดออกไซด์', 'ไนโตรเจน', 'ไอน้ำ'],
+    correct: 1
+  },
+  {
+    question: 'พืชมีการลำเลียงน้ำขึ้นจากรากไปยอดด้วยวิธีใดมากที่สุด?',
+    options: ['การแพร่', 'ความดันราก', 'แรงดึงจากการคายน้ำ', 'การหายใจระดับเซลล์'],
+    correct: 2
+  },
+  {
+    question: 'ส่วนใดของพืชมีหน้าที่สังเคราะห์แสงมากที่สุด?',
+    options: ['ดอก', 'ราก', 'ลำต้น', 'ใบ'],
+    correct: 3
+  },
+  {
+    question: 'พืชประเภทใดต่อไปนี้สืบพันธุ์แบบไม่อาศัยเพศตามธรรมชาติได้?',
+    options: ['ทานตะวัน', 'ข้าวโพด', 'มันสำปะหลัง', 'มะละกอ'],
+    correct: 2
+  },
+  {
+    question: 'ข้อใดเกี่ยวกับการคายน้ำของพืช "ไม่ถูกต้อง"?',
+    options: ['ช่วยดึงน้ำจากรากขึ้นใบ', 'เกิดที่ปากใบเป็นส่วนใหญ่', 'ทำให้พืชสูญเสียน้ำเกินความจำเป็นเสมอ', 'เกี่ยวข้องกับการควบคุมอุณหภูมิของพืช'],
+    correct: 2
+  },
+  {
+    question: 'ไซเลม (xylem) ในพืชมีคุณสมบัติอย่างไร?',
+    options: ['ลำเลียงอาหารจากใบ', 'ประกอบด้วยเซลล์มีชีวิต', 'ลำเลียงน้ำจากรากขึ้นสู่ยอด', 'พบเฉพาะในพืชใบเลี้ยงเดี่ยว'],
+    correct: 2
+  },
+  {
+    question: 'ข้อใดต่อไปนี้ "ไม่ใช่" พืชไม่มีท่อลำเลียง?',
+    options: ['มอส', 'ลิเวอร์เวิร์ต', 'เฟิร์น', 'ฮอร์นเวิร์ต'],
+    correct: 2
+  },
+  {
+    question: 'ในพืช C4 การตรึงคาร์บอนรอบแรกเกิดขึ้นที่ใด?',
+    options: ['เซลล์ปากใบ', 'เซลล์เมโสฟิลล์', 'เซลล์โฟลเอ็ม', 'เซลล์คุม'],
+    correct: 1
+  },
+  {
+    question: 'พืชพวกเฟิร์นสืบพันธุ์โดยใช้อะไรเป็นหลัก?',
+    options: ['เมล็ด', 'ดอก', 'สปอร์', 'หัวใต้ดิน'],
+    correct: 2
+  },
+  {
+    question: 'พืชเมล็ดเปลือย (Gymnosperms) แตกต่างจากพืชเมล็ดปิด (Angiosperms) อย่างไร?',
+    options: ['ไม่มีคลอโรฟิลล์', 'ไม่มีใบ', 'ไม่มีดอกจริง', 'ไม่มีราก'],
+    correct: 2
+  },
+  {
+    question: 'พืช CAM เช่น กระบองเพชร มีลักษณะพิเศษอย่างไร?',
+    options: ['เปิดปากใบเวลากลางคืน', 'ไม่มีการคายน้ำ', 'ใช้โฟลเอ็มในการดูดน้ำ', 'ใช้แสง UV ในการสังเคราะห์แสง'],
+    correct: 0
+  },
+  {
+    question: 'ฮอร์โมนพืชชนิดใดช่วยกระตุ้นการยืดตัวของเซลล์?',
+    options: ['ออกซิน', 'แอ็บไซซิก', 'ไซโตไคนิน', 'เอทิลีน'],
+    correct: 0
+  },
+  {
+    question: 'โครงสร้างใดของพืชทำหน้าที่ป้องกันการสูญเสียน้ำ?',
+    options: ['คิวติเคิล', 'ไซเลม', 'คลอโรพลาสต์', 'โฟลเอ็ม'],
+    correct: 0
+  },
+  {
+    question: 'เซลล์คุม (guard cell) ทำงานอย่างไรเมื่อพืชมีน้ำมาก?',
+    options: ['ปากใบจะปิด', 'ปากใบจะเปิด', 'การคายน้ำจะหยุด', 'การสังเคราะห์แสงจะหยุด'],
+    correct: 1
+  },
+  {
+    question: 'ข้อใดเป็นคุณสมบัติของพืชใบเลี้ยงคู่?',
+    options: ['เส้นใบขนาน', 'รากฝอย', 'ใบเลี้ยง 1 ใบ', 'รากแก้วและเส้นใบร่างแห'],
+    correct: 3
+  }
+];
 
-  <script>
-    const quizData = [/* ข้อมูลคำถามทั้งหมดของคุณตรงนี้ (คงเดิม) */];
-    let currentQuestion = 0;
-    let lock = false;
-    let countdownInterval = null;
+let currentQuestion = 0;
+let lock = false;
+let countdownInterval = null;
 
-    function loadQuestion() {
-      lock = false;
+function loadQuestion() {
+  lock = false;
+  clearInterval(countdownInterval);
+  document.getElementById('message').textContent = '';
+  const q = quizData[currentQuestion];
+
+  document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
+  document.getElementById('question-text').textContent = q.question;
+
+  const optionsDiv = document.getElementById('options');
+  optionsDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => answer(i, btn);
+    optionsDiv.appendChild(btn);
+  });
+}
+
+function startCountdown(seconds) {
+  let remaining = seconds;
+  document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; สตั๊นไป ${remaining} วิ`;
+  countdownInterval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
       clearInterval(countdownInterval);
+      lock = false;
       document.getElementById('message').textContent = '';
-      const q = quizData[currentQuestion];
-
-      document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
-      document.getElementById('question-text').textContent = q.question;
-
-      const optionsDiv = document.getElementById('options');
-      optionsDiv.innerHTML = '';
-      q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.textContent = opt;
-        btn.onclick = () => answer(i, btn);
-        optionsDiv.appendChild(btn);
-      });
+      document.querySelectorAll('#options button').forEach(b => b.disabled = false);
+    } else {
+      document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว ${remaining} วิ`;
     }
+  }, 1000);
+}
 
-    function startCountdown(seconds) {
-      let remaining = seconds;
-      document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; สตั๊นไป ${remaining} วิ`;
-      countdownInterval = setInterval(() => {
-        remaining--;
-        if (remaining <= 0) {
-          clearInterval(countdownInterval);
-          lock = false;
-          document.getElementById('message').textContent = '';
-          document.querySelectorAll('#options button').forEach(b => b.disabled = false);
-        } else {
-          document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว ${remaining} วิ`;
-        }
-      }, 1000);
-    }
+function answer(selectedIndex, selectedButton) {
+  if (lock) return;
+  const correctIndex = quizData[currentQuestion].correct;
+  const buttons = document.querySelectorAll('#options button');
 
-    function answer(selectedIndex, selectedButton) {
-      if (lock) return;
-      const correctIndex = quizData[currentQuestion].correct;
-      const buttons = document.querySelectorAll('#options button');
+  if (selectedIndex === correctIndex) {
+    setTimeout(() => {
+      currentQuestion++;
+      if (currentQuestion >= quizData.length) {
+  document.getElementById('quiz-container').style.display = 'none';
+document.getElementById('loading-screen').style.display = 'block';
 
-      if (selectedIndex === correctIndex) {
-        setTimeout(() => {
-          currentQuestion++;
-          if (currentQuestion >= quizData.length) {
-            document.getElementById('quiz-container').style.display = 'none';
-            document.getElementById('loading-screen').style.display = 'block';
+let dotCount = 1;
+const loadingDots = document.getElementById('loading-dots');
+const dotInterval = setInterval(() => {
+  dotCount = (dotCount % 3) + 1; // วน 1 ถึง 3
+  loadingDots.textContent = '.'.repeat(dotCount);
+}, 300); // เปลี่ยนจุดทุก 300ms
 
-            let dotCount = 1;
-            const loadingDots = document.getElementById('loading-dots');
-            const dotInterval = setInterval(() => {
-              dotCount = (dotCount % 3) + 1;
-              loadingDots.textContent = '.'.repeat(dotCount);
-            }, 300);
+setTimeout(() => {
+  clearInterval(dotInterval);
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('quiz-container').style.display = 'block';
+  document.getElementById('quiz-container').innerHTML = `
+    <h3 style="text-align:center; color:#2e7d32;">🌿 ปัญญาแห่งพืชสมุนไพรบังเกิดแล้ว! 🌿</h3>
+    <p style="text-align:center; margin-top: 20px;">
+      📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
+        ไปดูตำราสมุนไพรของเจ้ากันเลย! 🍃
+      </a>
+    </p>
+  `;
+}, 15000);
 
-            setTimeout(() => {
-              clearInterval(dotInterval);
-              document.getElementById('loading-screen').style.display = 'none';
-              document.getElementById('quiz-container').style.display = 'block';
-              document.getElementById('quiz-container').innerHTML = `
-                <h3 style="text-align:center; color:#2e7d32;">🌿 ปัญญาแห่งพืชสมุนไพรบังเกิดแล้ว! 🌿</h3>
-                <p style="text-align:center; margin-top: 20px;">
-                  📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
-                    ไปดูตำราสมุนไพรของเจ้ากันเลย! 🍃
-                  </a>
-                </p>
-              `;
-            }, 15000);
-          } else {
-            loadQuestion();
-          }
-        }, 600);
       } else {
-        lock = true;
-        buttons.forEach(b => b.disabled = true);
-        startCountdown(10);
+        loadQuestion();
       }
-    }
+    }, 600);
+  } else {
+    lock = true;
+    buttons.forEach(b => b.disabled = true);
+    startCountdown(10);
+  }
+}
 
-    loadQuestion();
-  </script>
+loadQuestion();
+</script>
+
 </body>
 </html>
