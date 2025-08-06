@@ -96,21 +96,6 @@ h2 {
   text-align: center;
 }
 
-.loader {
-  border: 6px solid #c8e6c9;
-  border-top: 6px solid #388e3c;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
-  margin: auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 </style>
 </head>
 <body>
@@ -123,10 +108,11 @@ h2 {
   <div id="message"></div>
   <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
   <div class="loader"></div>
+  <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
+  <img src="https://media1.tenor.com/m/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif" alt="loading" width="80" height="80" />
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-  กำลังโหลดข้อมูล<span id="loading-dots">.</span>
-</p>
-
+    กำลังโหลดข้อมูล<span id="loading-dots">.</span>
+  </p>
 </div>
 
 </div>
@@ -323,5 +309,6 @@ loadQuestion();
 
 </body>
 </html>
+
 
 
