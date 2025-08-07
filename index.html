@@ -96,26 +96,6 @@ h2 {
   text-align: center;
 }
 
-@keyframes leaf-burst {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-120px) scale(1.5);
-  }
-}
-
-.leaf-effect {
-  position: absolute;
-  font-size: 24px;
-  pointer-events: none;
-  animation: leaf-burst 1s ease-out forwards;
-  user-select: none;
-}
-
-
 </style>
 </head>
 <body>
@@ -128,12 +108,12 @@ h2 {
   <div id="message"></div>
 </div>
 
-<div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
+<div id="loading-screen" style="display: none; text-align: center; padding: 75px;">
   <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif"
-       alt="loading" width="150" height="150"
+       alt="loading" width="300" height="300"
        style="display: block; margin: auto;" />
-  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-    กำลังโหลดข้อมูล<span id="loading-dots">.</span>
+  <p style="margin-top: 30px; font-weight: bold; font-size: 27px; color: #2e7d32;">
+    แปปนึงน้อง พี่เขียนเว็บเพิ่มก่อน<span id="loading-dots">.</span>
   </p>
 </div>
 
@@ -249,30 +229,6 @@ let countdownInterval = null;
 
 quizData.sort(() => Math.random() - 0.5);
 
-function showLeafEffect(targetButton) {
-  const leaf = document.createElement('div');
-  leaf.className = 'leaf-effect';
-  leaf.textContent = '🍃';
-
-  // ตำแหน่งปุ่ม
-  const rect = targetButton.getBoundingClientRect();
-  const offsetX = Math.random() * 40 - 20; // สุ่มออกข้างนิดนึง
-  const offsetY = Math.random() * 10 + 5;  // สุ่มเริ่มต้นเล็กน้อย
-
-  // set ตำแหน่ง
-  leaf.style.left = `${rect.left + rect.width / 2 + offsetX}px`;
-  leaf.style.top = `${rect.top + window.scrollY + offsetY}px`;
-  leaf.style.position = 'absolute';
-
-  document.body.appendChild(leaf);
-
-  // ลบทิ้งหลัง animation
-  setTimeout(() => {
-    leaf.remove();
-  }, 1000);
-}
-
-
 function loadQuestion() {
   lock = false;
   clearInterval(countdownInterval);
@@ -314,7 +270,6 @@ function answer(selectedIndex, selectedButton) {
   const buttons = document.querySelectorAll('#options button');
 
   if (selectedIndex === correctIndex) {
-    showLeafEffect(selectedButton);
     setTimeout(() => {
       currentQuestion++;
       if (currentQuestion >= quizData.length) {
