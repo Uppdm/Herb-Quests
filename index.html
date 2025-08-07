@@ -157,7 +157,7 @@ const quizData = [
     correct: 2
   },
   {
-    question: 'ส่วนใดของพืชมีหน้าที่สังเคราะห์แสงมากที่สุด?',
+    question: 'ส่วนใดของพืชมีหน้าที่สังเคราะห์ด้วยแสงมากที่สุด?',
     options: ['ดอก', 'ราก', 'ลำต้น', 'ใบ'],
     correct: 3
   },
@@ -226,6 +226,8 @@ const quizData = [
 let currentQuestion = 0;
 let lock = false;
 let countdownInterval = null;
+
+quizData.sort(() => Math.random() - 0.5);
 
 function loadQuestion() {
   lock = false;
