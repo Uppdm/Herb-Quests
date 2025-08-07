@@ -96,6 +96,26 @@ h2 {
   text-align: center;
 }
 
+@keyframes leaf-burst {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.5);
+  }
+}
+
+.leaf-effect {
+  position: absolute;
+  font-size: 24px;
+  pointer-events: none;
+  animation: leaf-burst 1s ease-out forwards;
+  user-select: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -229,6 +249,30 @@ let countdownInterval = null;
 
 quizData.sort(() => Math.random() - 0.5);
 
+function showLeafEffect(targetButton) {
+  const leaf = document.createElement('div');
+  leaf.className = 'leaf-effect';
+  leaf.textContent = '🍃';
+
+  // ตำแหน่งปุ่ม
+  const rect = targetButton.getBoundingClientRect();
+  const offsetX = Math.random() * 40 - 20; // สุ่มออกข้างนิดนึง
+  const offsetY = Math.random() * 10 + 5;  // สุ่มเริ่มต้นเล็กน้อย
+
+  // set ตำแหน่ง
+  leaf.style.left = `${rect.left + rect.width / 2 + offsetX}px`;
+  leaf.style.top = `${rect.top + window.scrollY + offsetY}px`;
+  leaf.style.position = 'absolute';
+
+  document.body.appendChild(leaf);
+
+  // ลบทิ้งหลัง animation
+  setTimeout(() => {
+    leaf.remove();
+  }, 1000);
+}
+
+
 function loadQuestion() {
   lock = false;
   clearInterval(countdownInterval);
@@ -270,6 +314,7 @@ function answer(selectedIndex, selectedButton) {
   const buttons = document.querySelectorAll('#options button');
 
   if (selectedIndex === correctIndex) {
+    showLeafEffect(selectedButton);
     setTimeout(() => {
       currentQuestion++;
       if (currentQuestion >= quizData.length) {
