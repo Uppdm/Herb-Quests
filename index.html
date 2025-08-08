@@ -108,14 +108,31 @@ h2 {
   <div id="message"></div>
 </div>
 
-<div id="loading-screen" style="display: none; text-align: center; padding: 75px;">
+<div id="loading-screen"
+     style="
+       display: none;
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100vw;
+       height: 100vh;
+       background-color: white;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       z-index: 9999;
+     ">
   <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif"
-       alt="loading" width="300" height="300"
-       style="display: block; margin: auto;" />
-  <p style="margin-top: 30px; font-weight: bold; font-size: 27px; color: #2e7d32;">
+       alt="loading"
+       width="200"
+       height="200" />
+
+  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
     แปปนึงน้อง พี่เขียนเว็บเพิ่มก่อน<span id="loading-dots">.</span>
   </p>
 </div>
+
 
 
 
@@ -142,7 +159,7 @@ const quizData = [
     correct: 1
   },
   {
-    question: 'โฟลเอ็มในพืชทำหน้าที่ใด?',
+    question: 'Phloem ในพืชทำหน้าที่ใด?',
     options: ['ลำเลียงน้ำจากราก', 'ลำเลียงน้ำตาลจากใบไปยังส่วนอื่น', 'ลำเลียงออกซิเจน', 'ควบคุมการสังเคราะห์แสง'],
     correct: 1
   },
@@ -167,12 +184,12 @@ const quizData = [
     correct: 2
   },
   {
-    question: 'ข้อใดเกี่ยวกับการคายน้ำของพืช "ไม่ถูกต้อง"?',
+    question: 'ข้อใดกล่าวเกี่ยวกับการคายน้ำของพืชไม่ถูกต้อง?',
     options: ['ช่วยดึงน้ำจากรากขึ้นใบ', 'เกิดที่ปากใบเป็นส่วนใหญ่', 'ทำให้พืชสูญเสียน้ำเกินความจำเป็นเสมอ', 'เกี่ยวข้องกับการควบคุมอุณหภูมิของพืช'],
     correct: 2
   },
   {
-    question: 'ไซเลม (xylem) ในพืชมีคุณสมบัติอย่างไร?',
+    question: 'Xylem ในพืชมีคุณสมบัติอย่างไร?',
     options: ['ลำเลียงอาหารจากใบ', 'ประกอบด้วยเซลล์มีชีวิต', 'ลำเลียงน้ำจากรากขึ้นสู่ยอด', 'พบเฉพาะในพืชใบเลี้ยงเดี่ยว'],
     correct: 2
   },
@@ -212,7 +229,7 @@ const quizData = [
     correct: 0
   },
   {
-    question: 'เซลล์คุม (guard cell) ทำงานอย่างไรเมื่อพืชมีน้ำมาก?',
+    question: 'Guard Cell ทำงานอย่างไรเมื่อพืชมีน้ำมากเกิน?',
     options: ['ปากใบจะปิด', 'ปากใบจะเปิด', 'การคายน้ำจะหยุด', 'การสังเคราะห์แสงจะหยุด'],
     correct: 1
   },
