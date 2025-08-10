@@ -113,11 +113,9 @@ h2 {
        alt="loading" width="250" height="250"
        style="display: block; margin: auto;" />
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-    กำลังโหลดข้อมูล<span id="loading-dots">.</span>
+    Tralalero Tralala<span id="loading-dots">.</span>
   </p>
 </div>
-
-
 
 <script>
 const quizData = [
@@ -279,9 +277,9 @@ document.getElementById('loading-screen').style.display = 'block';
 let dotCount = 1;
 const loadingDots = document.getElementById('loading-dots');
 const dotInterval = setInterval(() => {
-  dotCount = (dotCount % 3) + 1; // วน 1 ถึง 3
+  dotCount = (dotCount % 3) + 1;
   loadingDots.textContent = '.'.repeat(dotCount);
-}, 300); // เปลี่ยนจุดทุก 300ms
+}, 300);
 
 setTimeout(() => {
   clearInterval(dotInterval);
