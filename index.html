@@ -359,7 +359,7 @@ function answer(selectedIndex, selectedButton) {
               </a>
             </p>
           `;
-        }, 10000);
+        }, 15000);
       } else {
         loadQuestion();
       }
@@ -367,7 +367,7 @@ function answer(selectedIndex, selectedButton) {
   } else {
     lock = true;
     buttons.forEach(b => b.disabled = true);
-    startCountdown(15);
+    startCountdown(10);
   }
 }
 
