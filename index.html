@@ -92,6 +92,30 @@ h2 {
   bottom: -20px;
   right: -20px;
 }
+<!-- Add this inside your quiz container, above #question-number -->
+<div id="progress-bar-container">
+  <div id="progress-bar"></div>
+</div>
+
+<style>
+/* Progress bar container */
+#progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #c8e6c9; /* light green */
+  border-radius: 6px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+/* Progress fill */
+#progress-bar {
+  width: 0%;
+  height: 100%;
+  background-color: #2e7d32; /* dark green */
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
 
 #question-number {
   text-align: center;
@@ -311,6 +335,32 @@ function startCountdown(seconds) {
       messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
     }
   }, 1000);
+}
+
+function updateProgress() {
+  const progress = ((currentQuestion) / quizData.length) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+}
+
+function loadQuestion() {
+  lock = false;
+  clearInterval(countdownInterval);
+  document.getElementById('message').textContent = '';
+  const q = quizData[currentQuestion];
+
+  updateProgress(); // <-- Update progress bar
+
+  document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
+  document.getElementById('question-text').textContent = q.question;
+
+  const optionsDiv = document.getElementById('options');
+  optionsDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => answer(i, btn);
+    optionsDiv.appendChild(btn);
+  });
 }
 
 
