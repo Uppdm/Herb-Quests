@@ -292,19 +292,27 @@ function loadQuestion() {
 
 function startCountdown(seconds) {
   let remaining = seconds;
-  document.getElementById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
+  lock = true;
+  const buttons = document.querySelectorAll('#options button');
+  buttons.forEach(b => b.disabled = true);
+
+  const messageEl = document.getElementById('message');
+
+  messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
+
   countdownInterval = setInterval(() => {
     remaining--;
     if (remaining <= 0) {
       clearInterval(countdownInterval);
       lock = false;
-      document.getElementById('message').textContent = '';
-      document.querySelectorAll('#options button').forEach(b => b.disabled = false);
+      messageEl.textContent = '';
+      buttons.forEach(b => b.disabled = false);
     } else {
-      document.getElementById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
+      messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
     }
   }, 1000);
 }
+
 
 function answer(selectedIndex, selectedButton) {
   if (lock) return;
