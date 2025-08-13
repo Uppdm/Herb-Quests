@@ -205,9 +205,9 @@ h2 {
        alt="loading" width="200" height="200"
        style="display: block; margin: auto;" />
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-    Tralalero Tralala<span id="loading-dots">.</span>
-  </p>
-</div>
+  Tralalero Tralala<span id="loading-dots">.</span>
+</p>
+<div id="loading-tip" style="text-align:center; margin-top: 15px; font-weight: normal; font-size: 16px; color: #2e7d32; opacity: 0; transition: opacity 1s;"></div>
 
 <script>
 const quizData = [
@@ -371,6 +371,23 @@ function startLoadingAnimation(duration = 10000) {
   }, duration);
 }
 
+function showLoadingTips(tips, interval = 4000) {
+  const tipEl = document.getElementById('loading-tip');
+  let index = 0;
+
+  function showNextTip() {
+    tipEl.style.opacity = 0;
+    setTimeout(() => {
+      tipEl.textContent = tips[index];
+      tipEl.style.opacity = 1;
+      index = (index + 1) % tips.length;
+    }, 1000);
+  }
+
+  showNextTip();
+  return setInterval(showNextTip, interval);
+}
+  
 function startCountdown(seconds) {
   let remaining = seconds;
   lock = true;
@@ -397,8 +414,9 @@ function burstConfetti(button){
         const conf = document.createElement('span');
         conf.textContent = '🎉';
         conf.style.position = 'absolute';
-        conf.style.left = button.offsetLeft + button.offsetWidth/2 + 'px';
-        conf.style.top = button.offsetTop + 'px';
+        const rect = button.getBoundingClientRect();
+        conf.style.left = rect.left + rect.width/2 + window.scrollX + 'px';
+        conf.style.top = rect.top + window.scrollY + 'px';
         conf.style.fontSize = `${10+Math.random()*10}px`;
         conf.style.opacity = 1;
         conf.style.transition = `transform 0.8s ease-out, opacity 0.8s ease-out`;
@@ -428,6 +446,13 @@ function answer(selectedIndex, selectedButton) {
         document.getElementById('quiz-container').style.display = 'none';
         document.getElementById('loading-screen').style.display = 'block';
         startLoadingAnimation(15000);
+        const tips = [
+  "Tip: ตำราถูกซ่อนอยู่สักที่ในฐานข้อมูล ตามหามันอย่างรอบคอบ",
+  "Tip: ระวังถูกขโมยทรัพย์สิน จงระมัดระวังและไม่ประมาท",
+  "Tip: อย่าทิ้งของมั่วซั่ว คุณอาจต้องใช้มันในภายหลัง"
+];
+
+const tipInterval = showLoadingTips(tips);
 
         let dotCount = 1;
         const loadingDots = document.getElementById('loading-dots');
@@ -438,13 +463,14 @@ function answer(selectedIndex, selectedButton) {
 
         setTimeout(() => {
           clearInterval(dotInterval);
+          clearInterval(tipInterval);
           document.getElementById('loading-screen').style.display = 'none';
           document.getElementById('quiz-container').style.display = 'block';
           document.getElementById('quiz-container').innerHTML = `
             <h3 style="text-align:center; color:#2e7d32;">🌿 เย้! ถอดรหัสสำเร็จแล้ว!!! 🌿</h3>
             <p style="text-align:center; margin-top: 20px;">
               📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
-                อ่ะกดตรงนี้ กดตรงนี้ตรงนี๊~ ~ 🍃
+                อ่ะกดตรงนี้ กดตรงนี้กดตรงนี๊~ ~ 🍃
               </a>
             </p>
           `;
