@@ -30,13 +30,24 @@
 
 @keyframes fall {
   0% {
-    transform: translateY(-50px) rotate(0deg);
-    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(30px) rotate(180deg);
   }
   100% {
-    transform: translateY(110vh) rotate(360deg);
-    opacity: 0;
+    transform: translateX(-30px) rotate(360deg);
+    top: 100vh;
+    opacity: 0.5;
   }
+}
+
+.leaf {
+  position: absolute;
+  top: -50px;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: ease-in-out;
 }
 
 body {
@@ -293,7 +304,7 @@ function startCountdown(seconds) {
     } else {
       document.getElementById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
     }
-  }, 1500);
+  }, 1000);
 }
 
 function answer(selectedIndex, selectedButton) {
@@ -342,29 +353,20 @@ setTimeout(() => {
 loadQuestion();
 
 function createLeaf() {
+  setInterval(createLeaf, 500);
   const leaf = document.createElement('span');
   leaf.classList.add('leaf');
-  leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)]; // random leaf type
-
-  // random horizontal start
+  leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
   leaf.style.left = Math.random() * 100 + 'vw';
-
-  // random size
   leaf.style.fontSize = (20 + Math.random() * 20) + 'px';
-
-  // random fall duration & delay
   const duration = 5 + Math.random() * 5;
+  const delay = Math.random() * 5;
   leaf.style.animationDuration = duration + 's';
-  leaf.style.animationDelay = (Math.random() * 5) + 's';
-
+  leaf.style.animationDelay = delay + 's';
   document.getElementById('falling-leaves').appendChild(leaf);
 
-  // remove after animation ends
-  setTimeout(() => leaf.remove(), duration * 1000);
+  setTimeout(() => leaf.remove(), (duration + delay) * 1000);
 }
-
-// generate leaves every 500ms
-setInterval(createLeaf, 500);
 
 </script>
 
