@@ -21,32 +21,16 @@
 .leaf {
   position: absolute;
   top: -50px;
-  font-size: 24px;
-  opacity: 0.8;
-  animation-name: fall;
-  animation-timing-function: linear;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateX(0) rotate(0deg);
-  }
-  50% {
-    transform: translateX(30px) rotate(180deg);
-  }
-  100% {
-    transform: translateX(-30px) rotate(360deg);
-    top: 100vh;
-    opacity: 0.5;
-  }
-}
-
-.leaf {
-  position: absolute;
-  top: -50px;
   pointer-events: none;
   animation-name: fall;
   animation-timing-function: ease-in-out;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% { transform: translateX(0) rotate(0deg); }
+  50% { transform: translateX(30px) rotate(180deg); }
+  100% { transform: translateX(-30px) rotate(360deg); top: 100vh; opacity: 0.5; }
 }
 
 body {
@@ -54,10 +38,9 @@ body {
   max-width: 700px;
   margin: auto;
   padding: 20px;
-  background: linear-gradient(to bottom, #e8f5e9, #ffffff);
-  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
   color: #2e4d2e;
-  background-image: url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
+  background: linear-gradient(to bottom, #e8f5e9, #ffffff),
+              url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
 }
 
 h2 {
@@ -75,9 +58,6 @@ h2 {
   box-shadow: 0 4px 15px rgba(34,139,34,0.2);
   border: 2px dashed #a5d6a7;
   position: relative;
-  <div id="progress-bar-container">
-  <div id="progress-bar"></div>
-</div>
 }
 
 #quiz-container::before {
@@ -95,21 +75,21 @@ h2 {
   bottom: -20px;
   right: -20px;
 }
-/* Progress bar container */
+
+/* Progress bar */
 #progress-bar-container {
   width: 100%;
   height: 12px;
-  background-color: #c8e6c9; /* light green */
+  background-color: #c8e6c9;
   border-radius: 6px;
   margin-bottom: 15px;
   overflow: hidden;
 }
 
-/* Progress fill */
 #progress-bar {
   width: 0%;
   height: 100%;
-  background-color: #2e7d32; /* dark green */
+  background-color: #2e7d32;
   border-radius: 6px;
   transition: width 0.3s ease;
 }
@@ -158,7 +138,6 @@ h2 {
   color: #d62828;
   text-align: center;
 }
-
 </style>
 </head>
 <body>
@@ -166,7 +145,11 @@ h2 {
 <div id="falling-leaves"></div>
 
 <h2>🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
+
 <div id="quiz-container">
+  <div id="progress-bar-container">
+    <div id="progress-bar"></div>
+  </div>
   <div id="question-number"></div>
   <div id="question-text"></div>
   <div id="options"></div>
@@ -175,8 +158,7 @@ h2 {
 
 <div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
   <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif"
-       alt="loading" width="250" height="250"
-       style="display: block; margin: auto;" />
+       alt="loading" width="250" height="250" style="display: block; margin: auto;" />
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
     Tralalero Tralala<span id="loading-dots">.</span>
   </p>
@@ -292,11 +274,18 @@ let countdownInterval = null;
 
 quizData.sort(() => Math.random() - 0.5);
 
+function updateProgress() {
+  const progress = ((currentQuestion) / quizData.length) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+}
+
 function loadQuestion() {
   lock = false;
   clearInterval(countdownInterval);
   document.getElementById('message').textContent = '';
   const q = quizData[currentQuestion];
+
+  updateProgress();
 
   document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
   document.getElementById('question-text').textContent = q.question;
@@ -316,9 +305,7 @@ function startCountdown(seconds) {
   lock = true;
   const buttons = document.querySelectorAll('#options button');
   buttons.forEach(b => b.disabled = true);
-
   const messageEl = document.getElementById('message');
-
   messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
 
   countdownInterval = setInterval(() => {
@@ -334,33 +321,6 @@ function startCountdown(seconds) {
   }, 1000);
 }
 
-function update() {
-  const progress = ((currentQuestion + 1) / quizData.length) * 100;
-  document.getElementById('progress-bar').style.width = progress + '%';
-}
-
-function loadQuestion() {
-  lock = false;
-  clearInterval(countdownInterval);
-  document.getElementById('message').textContent = '';
-  const q = quizData[currentQuestion];
-
-  updateProgress(); // <-- Update progress bar
-
-  document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
-  document.getElementById('question-text').textContent = q.question;
-
-  const optionsDiv = document.getElementById('options');
-  optionsDiv.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.onclick = () => answer(i, btn);
-    optionsDiv.appendChild(btn);
-  });
-}
-
-
 function answer(selectedIndex, selectedButton) {
   if (lock) return;
   const correctIndex = quizData[currentQuestion].correct;
@@ -370,30 +330,29 @@ function answer(selectedIndex, selectedButton) {
     setTimeout(() => {
       currentQuestion++;
       if (currentQuestion >= quizData.length) {
-  document.getElementById('quiz-container').style.display = 'none';
-document.getElementById('loading-screen').style.display = 'block';
+        document.getElementById('quiz-container').style.display = 'none';
+        document.getElementById('loading-screen').style.display = 'block';
 
-let dotCount = 1;
-const loadingDots = document.getElementById('loading-dots');
-const dotInterval = setInterval(() => {
-  dotCount = (dotCount % 3) + 1;
-  loadingDots.textContent = '.'.repeat(dotCount);
-}, 500);
+        let dotCount = 1;
+        const loadingDots = document.getElementById('loading-dots');
+        const dotInterval = setInterval(() => {
+          dotCount = (dotCount % 3) + 1;
+          loadingDots.textContent = '.'.repeat(dotCount);
+        }, 500);
 
-setTimeout(() => {
-  clearInterval(dotInterval);
-  document.getElementById('loading-screen').style.display = 'none';
-  document.getElementById('quiz-container').style.display = 'block';
-  document.getElementById('quiz-container').innerHTML = `
-    <h3 style="text-align:center; color:#2e7d32;">🌿 เย้! ถอดรหัสสำเร็จแล้ว!!! 🌿</h3>
-    <p style="text-align:center; margin-top: 20px;">
-      📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
-        อ่ะกดตรงนี้ กดตรงนี้ตรงนี๊~ ~ 🍃
-      </a>
-    </p>
-  `;
-}, 15000);
-
+        setTimeout(() => {
+          clearInterval(dotInterval);
+          document.getElementById('loading-screen').style.display = 'none';
+          document.getElementById('quiz-container').style.display = 'block';
+          document.getElementById('quiz-container').innerHTML = `
+            <h3 style="text-align:center; color:#2e7d32;">🌿 เย้! ถอดรหัสสำเร็จแล้ว!!! 🌿</h3>
+            <p style="text-align:center; margin-top: 20px;">
+              📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
+                อ่ะกดตรงนี้ กดตรงนี้ตรงนี๊~ ~ 🍃
+              </a>
+            </p>
+          `;
+        }, 15000);
       } else {
         loadQuestion();
       }
@@ -404,6 +363,7 @@ setTimeout(() => {
     startCountdown(15);
   }
 }
+
 loadQuestion();
 
 function createLeaf() {
@@ -417,12 +377,10 @@ function createLeaf() {
   leaf.style.animationDuration = duration + 's';
   leaf.style.animationDelay = delay + 's';
   document.getElementById('falling-leaves').appendChild(leaf);
-
   setTimeout(() => leaf.remove(), (duration + delay) * 1000);
 }
 
 setInterval(createLeaf, 500);
-
 </script>
 
 </body>
