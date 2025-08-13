@@ -291,8 +291,7 @@ function startCountdown(seconds) {
       document.getElementById('message').textContent = '';
       document.querySelectorAll('#options button').forEach(b => b.disabled = false);
     } else {
-      document.getEle
-      mentById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
+      document.getElementById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
     }
   }, 1500);
 }
