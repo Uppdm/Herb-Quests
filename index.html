@@ -131,6 +131,14 @@ h2 {
   background-color: #81c784;
   color: white;
   transition: 0.3s ease;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline: none;
 }
 
 #options button:hover:not(:disabled) {
@@ -140,6 +148,10 @@ h2 {
 #options button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+#options button:active {
+  background-color: #66bb6a;
 }
 
 #message {
