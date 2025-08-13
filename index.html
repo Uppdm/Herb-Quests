@@ -75,6 +75,9 @@ h2 {
   box-shadow: 0 4px 15px rgba(34,139,34,0.2);
   border: 2px dashed #a5d6a7;
   position: relative;
+  <div id="progress-bar-container">
+  <div id="progress-bar"></div>
+</div>
 }
 
 #quiz-container::before {
@@ -92,12 +95,6 @@ h2 {
   bottom: -20px;
   right: -20px;
 }
-<!-- Add this inside your quiz container, above #question-number -->
-<div id="progress-bar-container">
-  <div id="progress-bar"></div>
-</div>
-
-<style>
 /* Progress bar container */
 #progress-bar-container {
   width: 100%;
@@ -337,8 +334,8 @@ function startCountdown(seconds) {
   }, 1000);
 }
 
-function updateProgress() {
-  const progress = ((currentQuestion) / quizData.length) * 100;
+function update() {
+  const progress = ((currentQuestion + 1) / quizData.length) * 100;
   document.getElementById('progress-bar').style.width = progress + '%';
 }
 
