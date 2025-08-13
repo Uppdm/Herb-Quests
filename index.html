@@ -44,6 +44,21 @@
   50% { box-shadow: 0 0 25px rgba(34,139,34,0.8); }
 }
 
+@keyframes hurt-shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+#quiz-container.hurt {
+  animation: hurt-shake 0.5s ease;
+  background-color: #ffcccc !important
+}
+
+
 body {
   font-family: 'Sarabun', sans-serif;
   max-width: 700px;
@@ -441,6 +456,14 @@ function answer(selectedIndex, selectedButton) {
   } else {
     lock = true;
     buttons.forEach(b => b.disabled = true);
+
+    const quizContainer = document.getElementById('quiz-container');
+    quizContainer.classList.add('hurt');
+
+    setTimeout(() => {
+        quizContainer.classList.remove('hurt');
+    }, 500);
+
     startCountdown(10);
   }
 }
