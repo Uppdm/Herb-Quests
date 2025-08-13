@@ -25,6 +25,7 @@
   animation-name: fall;
   animation-timing-function: ease-in-out;
   opacity: 0.8;
+  will-change: transform
 }
 
 @keyframes fall {
@@ -138,6 +139,12 @@ h2 {
   color: #d62828;
   text-align: center;
 }
+
+@media (max-width: 480px) {
+  #options button { font-size: 14px; padding: 10px; }
+  #question-text { font-size: 18px; }
+}
+
 </style>
 </head>
 <body>
@@ -366,7 +373,12 @@ function answer(selectedIndex, selectedButton) {
 
 loadQuestion();
 
+let leavesOnScreen = 0;
+const maxLeaves = 20;
+
 function createLeaf() {
+  if (leavesOnScreen >= maxLeaves) return;
+  leavesOnScreen++;
   const leaf = document.createElement('span');
   leaf.classList.add('leaf');
   leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
@@ -377,10 +389,14 @@ function createLeaf() {
   leaf.style.animationDuration = duration + 's';
   leaf.style.animationDelay = delay + 's';
   document.getElementById('falling-leaves').appendChild(leaf);
-  setTimeout(() => leaf.remove(), (duration + delay) * 1000);
+
+  setTimeout(() => {
+    leaf.remove();
+    leavesOnScreen--;
+  }, (duration + delay) * 1000);
 }
 
-setInterval(createLeaf, 500);
+setInterval(createLeaf, 1000);
 </script>
 
 </body>
