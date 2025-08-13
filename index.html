@@ -248,7 +248,7 @@ function loadQuestion() {
 
 function startCountdown(seconds) {
   let remaining = seconds;
-  document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; สตั๊นไป ${remaining} วิ`;
+  document.getElementById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
   countdownInterval = setInterval(() => {
     remaining--;
     if (remaining <= 0) {
@@ -257,9 +257,9 @@ function startCountdown(seconds) {
       document.getElementById('message').textContent = '';
       document.querySelectorAll('#options button').forEach(b => b.disabled = false);
     } else {
-      document.getElementById('message').textContent = `เดี๋ยวนะ ไม่ถูกหรอ!?! แอ่ะ ;-; เวียนหัว ${remaining} วิ`;
+      document.getElementById('message').textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
     }
-  }, 1000);
+  }, 1500);
 }
 
 function answer(selectedIndex, selectedButton) {
@@ -279,17 +279,17 @@ const loadingDots = document.getElementById('loading-dots');
 const dotInterval = setInterval(() => {
   dotCount = (dotCount % 3) + 1;
   loadingDots.textContent = '.'.repeat(dotCount);
-}, 300);
+}, 500);
 
 setTimeout(() => {
   clearInterval(dotInterval);
   document.getElementById('loading-screen').style.display = 'none';
   document.getElementById('quiz-container').style.display = 'block';
   document.getElementById('quiz-container').innerHTML = `
-    <h3 style="text-align:center; color:#2e7d32;">🌿 ปัญญาแห่งพืชสมุนไพรบังเกิดแล้ว! 🌿</h3>
+    <h3 style="text-align:center; color:#2e7d32;">🌿 เย้! ถอดรหัสสำเร็จแล้ว!!! 🌿</h3>
     <p style="text-align:center; margin-top: 20px;">
       📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
-        ไปดูตำราสมุนไพรของเจ้ากันเลย! 🍃
+        อ่ะกดตรงนี้ กดตรงนี้ตรงนี๊~ ~ 🍃
       </a>
     </p>
   `;
