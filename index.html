@@ -163,9 +163,11 @@ h2 {
   <div id="message"></div>
 </div>
 
-<div id="loading-screen" style="display: none; text-align: center; padding: 50px;">
+<div id="loading-screen" style="display: none; text-align: center; padding: 50px; position: relative;">
+  <div id="cracking-animation" style="font-family: monospace; font-size: 28px; color: #2e7d32; margin-bottom: 20px;"></div>
   <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif"
-       alt="loading" width="250" height="250" style="display: block; margin: auto;" />
+       alt="loading" width="200" height="200"
+       style="display: block; margin: auto;" />
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
     Tralalero Tralala<span id="loading-dots">.</span>
   </p>
@@ -307,6 +309,32 @@ function loadQuestion() {
   });
 }
 
+function startLoadingAnimation(duration = 10000) {
+  const crackingEl = document.getElementById('cracking-animation');
+  const loadingDots = document.getElementById('loading-dots');
+  let dotCount = 1;
+
+  const chars = ['🌿','🍃','🍂','█','▓','▒','░','❀','✦','✿','🌱'];
+
+  const crackInterval = setInterval(() => {
+    let line = '';
+    for(let i=0; i<15; i++){
+      line += chars[Math.floor(Math.random() * chars.length)];
+    }
+    crackingEl.textContent = line;
+  }, 80);
+
+  const dotsInterval = setInterval(() => {
+    dotCount = (dotCount % 3) + 1;
+    loadingDots.textContent = '.'.repeat(dotCount);
+  }, 500);
+
+  setTimeout(() => {
+    clearInterval(crackInterval);
+    clearInterval(dotsInterval);
+  }, duration);
+}
+
 function startCountdown(seconds) {
   let remaining = seconds;
   lock = true;
@@ -339,6 +367,7 @@ function answer(selectedIndex, selectedButton) {
       if (currentQuestion >= quizData.length) {
         document.getElementById('quiz-container').style.display = 'none';
         document.getElementById('loading-screen').style.display = 'block';
+        startLoadingAnimation(15000);
 
         let dotCount = 1;
         const loadingDots = document.getElementById('loading-dots');
