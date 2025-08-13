@@ -7,6 +7,38 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
 
+/* Falling leaves container */
+#falling-leaves {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0; /* behind quiz */
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  top: -50px;
+  font-size: 24px;
+  opacity: 0.8;
+  animation-name: fall;
+  animation-timing-function: linear;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-50px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 body {
   font-family: 'Sarabun', sans-serif;
   max-width: 700px;
@@ -99,6 +131,8 @@ h2 {
 </style>
 </head>
 <body>
+
+<div id="falling-leaves"></div>
 
 <h2>🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
 <div id="quiz-container">
@@ -306,8 +340,33 @@ setTimeout(() => {
     startCountdown(15);
   }
 }
-
 loadQuestion();
+
+function createLeaf() {
+  const leaf = document.createElement('span');
+  leaf.classList.add('leaf');
+  leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)]; // random leaf type
+
+  // random horizontal start
+  leaf.style.left = Math.random() * 100 + 'vw';
+
+  // random size
+  leaf.style.fontSize = (20 + Math.random() * 20) + 'px';
+
+  // random fall duration & delay
+  const duration = 5 + Math.random() * 5;
+  leaf.style.animationDuration = duration + 's';
+  leaf.style.animationDelay = (Math.random() * 5) + 's';
+
+  document.getElementById('falling-leaves').appendChild(leaf);
+
+  // remove after animation ends
+  setTimeout(() => leaf.remove(), duration * 1000);
+}
+
+// generate leaves every 500ms
+setInterval(createLeaf, 500);
+
 </script>
 
 </body>
