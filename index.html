@@ -196,7 +196,7 @@ h2 {
 
 <div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; opacity:0; transform:translateY(20px); transition: opacity 1s ease, transform 1s ease;">
   <h1 style="color:#2e7d32; font-weight:600; margin-bottom:20px; max-width:90%; text-align:center;">
-    ยินดีต้อนรับสู่ Herb Quests<br>ภารกิจลับถอดรหัสสมุนไพร
+    ยินดีต้อนรับสู่<br><br>Herb Quests<br><br>ภารกิจลับถอดรหัสสมุนไพร
   </h1>
   <button id="start-quiz-btn" class="quiz-btn" style="margin-top:20px;">ถอดรหัส</button>
 </div>
@@ -285,7 +285,7 @@ h2 {
 </script>
 
 <div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#ffffff; text-align:center; opacity:0; transform:translateY(20px); transition: opacity 1s ease, transform 1s ease;">
-  <h1 style="color:#2e7d32; font-size:28px; max-width:90%;">ยินดีต้อนรับสู่ Herb Quests | ภารกิจลับถอดรหัสสมุนไพร</h1>
+  <h1 style="color:#2e7d32; font-size:28px; max-width:90%;">ยินดีต้อนรับสู่<br><br>Herb Quests<br><br>ภารกิจลับถอดรหัสสมุนไพร</h1>
   <button id="start-quiz-btn" style="margin-top:20px; padding:12px 20px; font-size:18px; background:#81c784; color:#fff; border:none; border-radius:8px; cursor:pointer;">
     ดำเนินการถอดรหัส
   </button>
@@ -338,7 +338,7 @@ h2 {
       welcomePage.style.transform = "translateY(0)";
     }, 50);
   }
-}, 100); // <-- missing this closing for setInterval
+}, 100);
 
 document.getElementById("start-quiz-btn").addEventListener("click", ()=>{
   const welcome = document.getElementById("welcome-page");
@@ -367,6 +367,7 @@ document.getElementById("start-quiz-btn").addEventListener("click", ()=>{
     quizContainer.style.opacity = 1;
     quizContainer.style.transform = "translateY(0)";
 
+    currentQuestion = 0;
     loadQuestion();
   }, 50);
 });
