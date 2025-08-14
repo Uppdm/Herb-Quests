@@ -218,7 +218,7 @@ h2 {
   <div id="cracking-animation" style="font-family: monospace; font-size: 28px; color: #2e7d32; margin-bottom: 20px;"></div>
   <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif" alt="loading" width="200" height="200" style="display: block; margin: auto;" />
   <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-    Tralalero Tralala<span id="loading-dots">.</span>
+  Tralalero Tralala<span id="loading-dots">.</span>
   </p>
   <div id="loading-tip" style="text-align:center; margin-top: 15px; font-weight: normal; font-size: 16px; color: #2e7d32; opacity: 0; transition: opacity 1s;"></div>
 </div>
@@ -254,8 +254,8 @@ h2 {
 
   let dotCount = 0;
 const dotInterval = setInterval(() => {
-  dotCount = (dotCount % 3) + 1; // 1 → 2 → 3 → 1 …
-  document.getElementById("loading-dots").textContent = ".".repeat(dotCount);
+  dotCount = (dotCount % 3) + 1;
+  loadingText.textContent = "🌿 กำลังโหลด" + ".".repeat(dotCount) + " 🍃";
 }, 500);
 
   let progress = 0;
