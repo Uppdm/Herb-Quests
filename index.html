@@ -188,12 +188,13 @@ h2 {
 </head>
 <body>
 
+<div id="falling-leaves"></div>
+  
 <div id="initial-loading" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center;">
   <h1 id="loading-text">🌿 กำลังโหลด... 🍃</h1>
   <div style="width:300px; height:12px; background:#c8e6c9; border-radius:6px; overflow:hidden; margin-top:20px;">
     <div id="loading-progress" style="width:0%; height:100%; background:#2e7d32; border-radius:6px;"></div>
   </div>
-  <div id="falling-leaves"></div>
 </div>
 
 <div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; opacity:0; transform:translateY(20px); transition: opacity 1s ease, transform 1s ease;">
@@ -252,10 +253,10 @@ h2 {
   const progressBar = document.getElementById("loading-progress");
 
   let dotCount = 0;
-  const dotInterval = setInterval(() => {
-    dotCount = (dotCount % 3) + 1;
-    loadingText.textContent = "🌿 กำลังโหลด" + ".".repeat(dotCount) + " 🍃";
-  }, 500);
+const dotInterval = setInterval(() => {
+  dotCount = (dotCount % 3) + 1; // 1 → 2 → 3 → 1 …
+  document.getElementById("loading-dots").textContent = ".".repeat(dotCount);
+}, 500);
 
   let progress = 0;
   const progressInterval = setInterval(() => {
