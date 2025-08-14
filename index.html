@@ -7,6 +7,16 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
 
+body {
+  font-family: 'Sarabun', sans-serif;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  color: #2e4d2e;
+  background: #ffffff;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+}
+
 #falling-leaves {
   position: fixed;
   top: 0;
@@ -25,7 +35,7 @@
   animation-name: fall;
   animation-timing-function: ease-in-out;
   opacity: 0.8;
-  will-change: transform
+  will-change: transform;
 }
 
 @keyframes fall {
@@ -55,18 +65,7 @@
 
 #quiz-container.hurt {
   animation: hurt-shake 0.5s ease;
-  background-color: #ffcccc !important
-}
-
-
-body {
-  font-family: 'Sarabun', sans-serif;
-  max-width: 700px;
-  margin: auto;
-  padding: 20px;
-  color: #2e4d2e;
-  background: #ffffff;
-  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+  background-color: #ffcccc !important;
 }
 
 h2 {
@@ -84,6 +83,9 @@ h2 {
   box-shadow: 0 4px 15px rgba(34,139,34,0.2);
   border: 2px dashed #a5d6a7;
   position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 #quiz-container::before {
@@ -146,28 +148,13 @@ h2 {
   background-color: #81c784;
   color: white;
   transition: 0.3s ease;
-
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   outline: none;
+  user-select: none;
 }
 
-#options button:hover:not(:disabled) {
-  background-color: #66bb6a;
-}
-
-#options button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-#options button:active {
-  background-color: #66bb6a;
-}
+#options button:hover:not(:disabled) { background-color: #66bb6a; }
+#options button:disabled { opacity: 0.6; cursor: not-allowed; }
+#options button:active { background-color: #66bb6a; }
 
 #message {
   margin-top: 15px;
@@ -176,11 +163,27 @@ h2 {
   text-align: center;
 }
 
+.quiz-btn {
+  width: 250px;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #81c784;
+  color: white;
+  transition: 0.3s ease;
+  font-family: 'Sarabun', sans-serif;
+  outline: none;
+}
+
+.quiz-btn:hover { background-color: #66bb6a; }
+.quiz-btn:active { background-color: #66bb6a; }
+
 @media (max-width: 480px) {
   #options button { font-size: 14px; padding: 10px; }
   #question-text { font-size: 18px; }
 }
-
 </style>
 </head>
 <body>
@@ -193,7 +196,6 @@ h2 {
   <div id="falling-leaves"></div>
 </div>
 
-
 <div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; text-align:center; opacity:0; transform:translateY(20px); transition: opacity 1s ease, transform 1s ease;">
   <h1 style="color:#2e7d32; font-weight:600; margin-bottom:20px; max-width:90%; text-align:center;">
     ยินดีต้อนรับสู่<br><br>Herb Quests<br>ภารกิจลับถอดรหัสสมุนไพร
@@ -201,46 +203,60 @@ h2 {
   <button id="start-quiz-btn" class="quiz-btn" style="margin-top:20px;">ถอดรหัส</button>
 </div>
 
-<style>
-.quiz-btn {
-  width: 250px;          /* similar width to quiz options */
-  padding: 12px;         /* same padding */
-  font-size: 16px;       /* same font size */
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: #81c784;  /* same green */
-  color: white;
-  transition: 0.3s ease;
-  font-family: 'Sarabun', sans-serif;
-  outline: none;
-}
+<h2 id="quiz-title" style="display:none;">🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
 
-.quiz-btn:hover {
-  background-color: #66bb6a;  /* same hover effect */
-}
+<div id="quiz-container" style="display:none;">
+  <div id="progress-bar-container"><div id="progress-bar"></div></div>
+  <div id="question-number"></div>
+  <div id="question-text"></div>
+  <div id="options"></div>
+  <div id="message"></div>
+</div>
 
-.quiz-btn:active {
-  background-color: #66bb6a;
-}
-</style>
+<div id="loading-screen" style="display: none; text-align: center; padding: 50px; position: relative;">
+  <div id="cracking-animation" style="font-family: monospace; font-size: 28px; color: #2e7d32; margin-bottom: 20px;"></div>
+  <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif" alt="loading" width="200" height="200" style="display: block; margin: auto;" />
+  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
+    Tralalero Tralala<span id="loading-dots">.</span>
+  </p>
+  <div id="loading-tip" style="text-align:center; margin-top: 15px; font-weight: normal; font-size: 16px; color: #2e7d32; opacity: 0; transition: opacity 1s;"></div>
+</div>
 
 <script>
-  // === INITIAL LOADING + FALLING LEAVES SCRIPT ===
+  // === FALLING LEAVES ===
+  let leavesOnScreen = 0;
+  const maxLeaves = 20;
 
+  function createLeaf() {
+    if (leavesOnScreen >= maxLeaves) return;
+    leavesOnScreen++;
+    const leaf = document.createElement('span');
+    leaf.classList.add('leaf');
+    leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
+    leaf.style.left = Math.random() * 100 + 'vw';
+    leaf.style.fontSize = (20 + Math.random()*20) + 'px';
+    const duration = 5 + Math.random() * 5;
+    const delay = Math.random() * 5;
+    leaf.style.animationDuration = duration + 's';
+    leaf.style.animationDelay = delay + 's';
+    document.getElementById('falling-leaves').appendChild(leaf);
+    setTimeout(()=> { leaf.remove(); leavesOnScreen--; }, (duration + delay) * 1000);
+  }
+
+  setInterval(createLeaf, 1000);
+
+  // === LOADING SCREEN ===
   const loadingDiv = document.getElementById("initial-loading");
   const welcomePage = document.getElementById("welcome-page");
   const loadingText = document.getElementById("loading-text");
   const progressBar = document.getElementById("loading-progress");
 
-  // Dots animation
   let dotCount = 0;
   const dotInterval = setInterval(() => {
     dotCount = (dotCount % 3) + 1;
     loadingText.textContent = "🌿 กำลังโหลด" + ".".repeat(dotCount) + " 🍃";
   }, 500);
 
-  // Progress bar filling
   let progress = 0;
   const progressInterval = setInterval(() => {
     progress += 2;
@@ -257,110 +273,6 @@ h2 {
     }
   }, 100);
 
-  // === FALLING LEAVES FOR LOADING SCREEN ===
-  let leavesOnScreen = 0;
-  const maxLeaves = 20;
-
-  function createLeaf() {
-    if (leavesOnScreen >= maxLeaves) return;
-    leavesOnScreen++;
-    const leaf = document.createElement('span');
-    leaf.classList.add('leaf');
-    leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
-    leaf.style.left = Math.random() * 100 + 'vw';
-    leaf.style.fontSize = (20 + Math.random() * 20) + 'px';
-    const duration = 5 + Math.random() * 5;
-    const delay = Math.random() * 5;
-    leaf.style.animationDuration = duration + 's';
-    leaf.style.animationDelay = delay + 's';
-    document.getElementById('falling-leaves').appendChild(leaf);
-
-    setTimeout(()=>{
-      leaf.remove();
-      leavesOnScreen--;
-    }, (duration + delay) * 1000);
-  }
-
-  setInterval(createLeaf, 1000);
-</script>
-
-<div id="falling-leaves"></div>
-<h2 id="quiz-title" style="display:none;">🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
-
-<div id="quiz-container" style="display:none;">
-</div>
-
-<div id="loading-screen" style="display: none; text-align: center; padding: 50px; position: relative;">
-  <div id="cracking-animation" style="font-family: monospace; font-size: 28px; color: #2e7d32; margin-bottom: 20px;"></div>
-  <img src="https://media.tenor.com/-OLXFI_TtsQAAAAC/glitch-boy-loading-screen.gif"
-       alt="loading" width="200" height="200"
-       style="display: block; margin: auto;" />
-  <p style="margin-top: 20px; font-weight: bold; font-size: 18px; color: #2e7d32;">
-  Tralalero Tralala<span id="loading-dots">.</span>
-</p>
-<div id="loading-tip" style="text-align:center; margin-top: 15px; font-weight: normal; font-size: 16px; color: #2e7d32; opacity: 0; transition: opacity 1s;"></div>
-
-<script>
-// === NEW PART: initial loading ===
-(function(){
-  let dotCount = 0;
-  const loadingText = document.getElementById("loading-text");
-  const progressBar = document.getElementById("loading-progress");
-  const loadingDiv = document.getElementById("initial-loading");
-  const welcomePage = document.getElementById("welcome-page");
-
-  // Dots animation
-  const dotInterval = setInterval(()=>{
-    dotCount = (dotCount % 3) + 1;
-    loadingText.textContent = "loading" + ".".repeat(dotCount);
-  }, 500);
-
-  // Progress bar filling
-  let progress = 0;
-  const progressInterval = setInterval(()=>{
-  progress += 2; // 2% every 0.1s → 5s total
-  progressBar.style.width = progress + "%";
-  if(progress >= 100){
-    clearInterval(progressInterval);
-    clearInterval(dotInterval);
-    // After loading complete → show welcome page with fade-in
-    loadingDiv.style.display = "none";
-    welcomePage.style.display = "flex";
-    setTimeout(()=> {
-      welcomePage.style.opacity = 1;
-      welcomePage.style.transform = "translateY(0)";
-    }, 50);
-  }
-}, 100);
-
-document.getElementById("start-quiz-btn").addEventListener("click", () => {
-  const welcome = document.getElementById("welcome-page");
-  welcome.style.opacity = 0;
-  welcome.style.transform = "translateY(-20px)";
-  setTimeout(() => welcome.style.display = "none", 500);
-
-  const quizTitle = document.getElementById("quiz-title");
-  const quizContainer = document.getElementById("quiz-container");
-
-  quizTitle.style.display = "block";
-  quizContainer.style.display = "block";
-
-  setTimeout(() => {
-    quizTitle.style.opacity = 1;
-    quizTitle.style.transform = "translateY(0)";
-    quizContainer.style.opacity = 1;
-    quizContainer.style.transform = "translateY(0)";
-
-    currentQuestion = 0;  // reset quiz
-    loadQuestion();        // show first question
-  }, 50);
-});
-
-
-</script>
-
-  
-<script>
 const quizData = [
   {
     question: 'ข้อใดเป็นหน้าที่หลักของรากพืช?',
@@ -464,237 +376,123 @@ const quizData = [
   }
 ];
 
-let currentQuestion = 0;
-let lock = false;
-let countdownInterval = null;
+  quizData.sort(() => Math.random() - 0.5);
+  let currentQuestion = 0;
+  let lock = false;
+  let countdownInterval = null;
 
-quizData.sort(() => Math.random() - 0.5);
+  function updateProgress() {
+    const progress = ((currentQuestion) / quizData.length) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+  }
 
-function spawnConfetti() {
-  const confetti = document.createElement('span');
-  const emojis = ['✨','🎉','💚','🌟','🍃'];
-  confetti.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-  confetti.style.position = 'absolute';
-  confetti.style.left = Math.random()*100+'vw';
-  confetti.style.top = Math.random()*-10+'vh';
-  confetti.style.fontSize = (10+Math.random()*20)+'px';
-  confetti.style.opacity = 0.8;
-  confetti.style.transition = 'transform 3s ease-out, opacity 3s ease-out';
-  document.getElementById('loading-confetti').appendChild(confetti);
+  function loadQuestion() {
+    lock = false;
+    clearInterval(countdownInterval);
+    document.getElementById('message').textContent = '';
+    const q = quizData[currentQuestion];
+    updateProgress();
+    document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
+    document.getElementById('question-text').textContent = q.question;
 
-  setTimeout(()=> {
-    confetti.style.transform = `translateY(100vh) rotate(${Math.random()*720}deg)`;
-    confetti.style.opacity = 0;
-  }, 50);
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => answer(i, btn);
+      optionsDiv.appendChild(btn);
+    });
+  }
 
-  setTimeout(()=> confetti.remove(), 3000);
-}
-
-setInterval(spawnConfetti, 150);
-
-  
-function updateProgress() {
-  const progress = ((currentQuestion) / quizData.length) * 100;
-  document.getElementById('progress-bar').style.width = progress + '%';
-}
-
-function loadQuestion() {
-  lock = false;
-  clearInterval(countdownInterval);
-  document.getElementById('message').textContent = '';
-  const q = quizData[currentQuestion];
-
-  updateProgress();
-
-  document.getElementById('question-number').textContent = `ข้อที่ ${currentQuestion + 1} / ${quizData.length}`;
-  document.getElementById('question-text').textContent = q.question;
-
-  const optionsDiv = document.getElementById('options');
-  optionsDiv.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.onclick = () => answer(i, btn);
-    optionsDiv.appendChild(btn);
-  });
-}
-
-function startLoadingAnimation(duration = 10000) {
-  const crackingEl = document.getElementById('cracking-animation');
-  const loadingDots = document.getElementById('loading-dots');
-  let dotCount = 1;
-
-  const chars = ['🌿','🍃','🍂','█','▓','▒','░','❀','✦','✿','🌱'];
-
-  const crackInterval = setInterval(() => {
-    let line = '';
-    for(let i=0; i<15; i++){
-      line += chars[Math.floor(Math.random() * chars.length)];
+  function burstConfetti(button){
+    for(let i=0;i<20;i++){
+      const conf = document.createElement('span');
+      conf.textContent = '🎉';
+      conf.style.position = 'absolute';
+      const rect = button.getBoundingClientRect();
+      conf.style.left = rect.left + rect.width/2 + window.scrollX + 'px';
+      conf.style.top = rect.top + window.scrollY + 'px';
+      conf.style.fontSize = `${10+Math.random()*10}px`;
+      conf.style.opacity = 1;
+      conf.style.transition = `transform 0.8s ease-out, opacity 0.8s ease-out`;
+      document.body.appendChild(conf);
+      setTimeout(()=>{
+        conf.style.transform = `translate(${(Math.random()-0.5)*100}px, ${-100-Math.random()*50}px) rotate(${Math.random()*360}deg)`;
+        conf.style.opacity = 0;
+      }, 10);
+      setTimeout(()=> conf.remove(), 800);
     }
-    crackingEl.textContent = line;
-  }, 80);
+  }
 
-  const dotsInterval = setInterval(() => {
-    dotCount = (dotCount % 3) + 1;
-    loadingDots.textContent = '.'.repeat(dotCount);
-  }, 500);
+  function startCountdown(seconds) {
+    let remaining = seconds;
+    lock = true;
+    const buttons = document.querySelectorAll('#options button');
+    buttons.forEach(b => b.disabled = true);
+    const messageEl = document.getElementById('message');
+    messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
 
-  setTimeout(() => {
-    clearInterval(crackInterval);
-    clearInterval(dotsInterval);
-  }, duration);
-}
-
-function showLoadingTips(tips, interval = 4000) {
-  const tipEl = document.getElementById('loading-tip');
-  let index = 0;
-
-  function showNextTip() {
-    tipEl.style.opacity = 0;
-    setTimeout(() => {
-      tipEl.textContent = tips[index];
-      tipEl.style.opacity = 1;
-      index = (index + 1) % tips.length;
+    countdownInterval = setInterval(() => {
+      remaining--;
+      if (remaining <= 0) {
+        clearInterval(countdownInterval);
+        lock = false;
+        messageEl.textContent = '';
+        buttons.forEach(b => b.disabled = false);
+      } else {
+        messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
+      }
     }, 1000);
   }
 
-  showNextTip();
-  return setInterval(showNextTip, interval);
-}
-  
-function startCountdown(seconds) {
-  let remaining = seconds;
-  lock = true;
-  const buttons = document.querySelectorAll('#options button');
-  buttons.forEach(b => b.disabled = true);
-  const messageEl = document.getElementById('message');
-  messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
-
-  countdownInterval = setInterval(() => {
-    remaining--;
-    if (remaining <= 0) {
-      clearInterval(countdownInterval);
-      lock = false;
-      messageEl.textContent = '';
-      buttons.forEach(b => b.disabled = false);
+  function answer(selectedIndex, selectedButton) {
+    if(lock) return;
+    const correctIndex = quizData[currentQuestion].correct;
+    const buttons = document.querySelectorAll('#options button');
+    if(selectedIndex === correctIndex) {
+      selectedButton.style.animation = 'correct-flash 0.6s ease';
+      document.getElementById('quiz-container').style.animation = 'glow 0.6s ease';
+      burstConfetti(selectedButton);
+      setTimeout(() => {
+        currentQuestion++;
+        if(currentQuestion >= quizData.length) {
+          document.getElementById('quiz-container').style.display='none';
+          document.getElementById('loading-screen').style.display='block';
+          setTimeout(() => {
+            document.getElementById('loading-screen').style.display='none';
+            document.getElementById('quiz-container').style.display='block';
+            document.getElementById('quiz-container').innerHTML = `
+              <h3 style="text-align:center; color:#2e7d32;">🌿 เย้! ถอดรหัสสำเร็จแล้ว!!! 🌿</h3>
+              <p style="text-align:center; margin-top: 20px;">
+                📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
+                  อ่ะกดตรงนี้ กดตรงนี้กดตรงนี๊~ ~ 🍃
+                </a>
+              </p>
+            `;
+          }, 15000);
+        } else {
+          loadQuestion();
+        }
+      }, 600);
     } else {
-      messageEl.textContent = `เหมือนจะไม่ใช่นะ เอ้า! โดนบล็อกไป ${remaining} วิ ;-;`;
+      document.getElementById('quiz-container').classList.add('hurt');
+      setTimeout(()=> document.getElementById('quiz-container').classList.remove('hurt'), 500);
+      startCountdown(10);
     }
-  }, 1000);
-}
-
-function burstConfetti(button){
-    for(let i=0;i<20;i++){
-        const conf = document.createElement('span');
-        conf.textContent = '🎉';
-        conf.style.position = 'absolute';
-        const rect = button.getBoundingClientRect();
-        conf.style.left = rect.left + rect.width/2 + window.scrollX + 'px';
-        conf.style.top = rect.top + window.scrollY + 'px';
-        conf.style.fontSize = `${10+Math.random()*10}px`;
-        conf.style.opacity = 1;
-        conf.style.transition = `transform 0.8s ease-out, opacity 0.8s ease-out`;
-        document.body.appendChild(conf);
-        setTimeout(()=>{
-            conf.style.transform = `translate(${(Math.random()-0.5)*100}px, ${-100-Math.random()*50}px) rotate(${Math.random()*360}deg)`;
-            conf.style.opacity = 0;
-        }, 10);
-        setTimeout(()=> conf.remove(), 800);
-    }
-}
-  
-function answer(selectedIndex, selectedButton) {
-  if (lock) return;
-  const correctIndex = quizData[currentQuestion].correct;
-  const buttons = document.querySelectorAll('#options button');
-
-  if (selectedIndex === correctIndex) {
-    selectedButton.style.animation = 'correct-flash 0.6s ease';
-    const container = document.getElementById('quiz-container');
-    container.style.animation = 'glow 0.6s ease';
-    burstConfetti(selectedButton);
-
-    setTimeout(() => {
-      currentQuestion++;
-      if (currentQuestion >= quizData.length) {
-        document.getElementById('quiz-container').style.display = 'none';
-        document.getElementById('loading-screen').style.display = 'block';
-        startLoadingAnimation(15000);
-        const tips = [
-  "Tip: ตำราถูกซ่อนอยู่สักที่ในฐานข้อมูล ตามหามันอย่างรอบคอบ",
-  "Tip: ระวังถูกขโมยทรัพย์สิน จงระมัดระวังและไม่ประมาท",
-  "Tip: อย่าทิ้งของมั่วซั่ว คุณอาจต้องใช้มันในภายหลัง"
-];
-
-const tipInterval = showLoadingTips(tips);
-
-        let dotCount = 1;
-        const loadingDots = document.getElementById('loading-dots');
-        const dotInterval = setInterval(() => {
-          dotCount = (dotCount % 3) + 1;
-          loadingDots.textContent = '.'.repeat(dotCount);
-        }, 500);
-
-        setTimeout(() => {
-          clearInterval(dotInterval);
-          clearInterval(tipInterval);
-          document.getElementById('loading-screen').style.display = 'none';
-          document.getElementById('quiz-container').style.display = 'block';
-          document.getElementById('quiz-container').innerHTML = `
-            <h3 style="text-align:center; color:#2e7d32;">🌿 เย้! ถอดรหัสสำเร็จแล้ว!!! 🌿</h3>
-            <p style="text-align:center; margin-top: 20px;">
-              📚 <a href="https://drive.google.com/drive/folders/14qBbbZpdk5z3e84c1cyqr2qwEhNcDrlh?usp=sharing" target="_blank" style="color:#388e3c; font-weight:bold;">
-                อ่ะกดตรงนี้ กดตรงนี้กดตรงนี๊~ ~ 🍃
-              </a>
-            </p>
-          `;
-        }, 15000);
-      } else {
-        loadQuestion();
-      }
-    }, 600);
-  } else {
-    lock = true;
-    buttons.forEach(b => b.disabled = true);
-
-    const quizContainer = document.getElementById('quiz-container');
-    quizContainer.classList.add('hurt');
-
-    setTimeout(() => {
-        quizContainer.classList.remove('hurt');
-    }, 500);
-
-    startCountdown(10);
   }
-}
 
-loadQuestion();
-
-let leavesOnScreen = 0;
-const maxLeaves = 20;
-
-function createLeaf() {
-  // === FALLING LEAVES ===
-let leavesOnScreen = 0;
-const maxLeaves = 20;
-function createLeaf() {
-  if(leavesOnScreen>=maxLeaves) return;
-  leavesOnScreen++;
-  const leaf=document.createElement('span');
-  leaf.classList.add('leaf');
-  leaf.textContent=['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
-  leaf.style.left=Math.random()*100+'vw';
-  leaf.style.fontSize=(20+Math.random()*20)+'px';
-  const duration=5+Math.random()*5;
-  const delay=Math.random()*5;
-  leaf.style.animationDuration=duration+'s';
-  leaf.style.animationDelay=delay+'s';
-  document.getElementById('falling-leaves').appendChild(leaf);
-  setTimeout(()=>{leaf.remove();leavesOnScreen--;},(duration+delay)*1000);
-}
-setInterval(createLeaf,1000);
+  document.getElementById("start-quiz-btn").addEventListener("click", () => {
+    const welcome = document.getElementById("welcome-page");
+    welcome.style.opacity = 0;
+    welcome.style.transform = "translateY(-20px)";
+    setTimeout(() => welcome.style.display = "none", 500);
+    document.getElementById("quiz-title").style.display="block";
+    const quizContainer = document.getElementById("quiz-container");
+    quizContainer.style.display="block";
+    setTimeout(()=> { quizContainer.style.opacity=1; quizContainer.style.transform="translateY(0)"; loadQuestion(); }, 50);
+  });
 
 </script>
-
 </body>
 </html>
