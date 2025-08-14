@@ -494,6 +494,15 @@ const quizData = [
     setTimeout(()=> { quizContainer.style.opacity=1; quizContainer.style.transform="translateY(0)"; loadQuestion(); }, 50);
   });
 
+  // Animate dots for Tralalero Tralala
+const loadingDots = document.getElementById("loading-dots");
+let tralaleroDots = 0;
+setInterval(() => {
+  if (!loadingDots) return; // safety check
+  tralaleroDots = (tralaleroDots % 3) + 1; // 1 → 2 → 3 → 1
+  loadingDots.textContent = ".".repeat(tralaleroDots);
+}, 500);
+
 </script>
 </body>
 </html>
