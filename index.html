@@ -246,8 +246,9 @@ const progressInterval = setInterval(() => {
   if(progress >= 100){
     clearInterval(progressInterval);
     clearInterval(dotInterval);
-    loadingDiv.style.display = "none"; // hide loading
-    welcomePage.style.display = "flex"; // show welcome page
+    // Hide loading and show welcome page
+    loadingDiv.style.display = "none";
+    welcomePage.style.display = "flex";
     setTimeout(() => {
       welcomePage.style.opacity = 1;
       welcomePage.style.transform = "translateY(0)";
