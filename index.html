@@ -259,7 +259,7 @@ h2 {
 </script>
 
 <div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#ffffff; text-align:center; opacity:0; transform:translateY(20px); transition: opacity 1s ease, transform 1s ease;">
-  <h1 style="color:#2e7d32; font-size:28px; max-width:90%;">ยินดีต้อนรับสู่ Herb Quests : ภารกิจลับถอดรหัสสมุนไพร</h1>
+  <h1 style="color:#2e7d32; font-size:28px; max-width:90%;">ยินดีต้อนรับสู่ Herb Quests | ภารกิจลับถอดรหัสสมุนไพร</h1>
   <button id="start-quiz-btn" style="margin-top:20px; padding:12px 20px; font-size:18px; background:#81c784; color:#fff; border:none; border-radius:8px; cursor:pointer;">
     ดำเนินการถอดรหัส
   </button>
@@ -663,26 +663,26 @@ let leavesOnScreen = 0;
 const maxLeaves = 20;
 
 function createLeaf() {
-  if (leavesOnScreen >= maxLeaves) return;
+  // === FALLING LEAVES ===
+let leavesOnScreen = 0;
+const maxLeaves = 20;
+function createLeaf() {
+  if(leavesOnScreen>=maxLeaves) return;
   leavesOnScreen++;
-  const leaf = document.createElement('span');
+  const leaf=document.createElement('span');
   leaf.classList.add('leaf');
-  leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
-  leaf.style.left = Math.random() * 100 + 'vw';
-  leaf.style.fontSize = (20 + Math.random() * 20) + 'px';
-  const duration = 5 + Math.random() * 5;
-  const delay = Math.random() * 5;
-  leaf.style.animationDuration = duration + 's';
-  leaf.style.animationDelay = delay + 's';
+  leaf.textContent=['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
+  leaf.style.left=Math.random()*100+'vw';
+  leaf.style.fontSize=(20+Math.random()*20)+'px';
+  const duration=5+Math.random()*5;
+  const delay=Math.random()*5;
+  leaf.style.animationDuration=duration+'s';
+  leaf.style.animationDelay=delay+'s';
   document.getElementById('falling-leaves').appendChild(leaf);
-
-  setTimeout(() => {
-    leaf.remove();
-    leavesOnScreen--;
-  }, (duration + delay) * 1000);
+  setTimeout(()=>{leaf.remove();leavesOnScreen--;},(duration+delay)*1000);
 }
+setInterval(createLeaf,1000);
 
-setInterval(createLeaf, 1000);
 </script>
 
 </body>
