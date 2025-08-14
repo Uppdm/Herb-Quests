@@ -247,19 +247,20 @@ h2 {
   // Progress bar filling
   let progress = 0;
   const progressInterval = setInterval(()=>{
-    progress += 2; // 2% every 0.1s → 5s total
-    progressBar.style.width = progress + "%";
-    if(progress >= 100){
-  clearInterval(progressInterval);
-  clearInterval(dotInterval);
-  // After loading complete → show welcome page with fade-in
-  loadingDiv.style.display = "none";
-  welcomePage.style.display = "flex";
-  setTimeout(()=> {
-    welcomePage.style.opacity = 1;
-    welcomePage.style.transform = "translateY(0)";
-  }, 50);
-}
+  progress += 2; // 2% every 0.1s → 5s total
+  progressBar.style.width = progress + "%";
+  if(progress >= 100){
+    clearInterval(progressInterval);
+    clearInterval(dotInterval);
+    // After loading complete → show welcome page with fade-in
+    loadingDiv.style.display = "none";
+    welcomePage.style.display = "flex";
+    setTimeout(()=> {
+      welcomePage.style.opacity = 1;
+      welcomePage.style.transform = "translateY(0)";
+    }, 50);
+  }
+}, 100); // <-- missing this closing for setInterval
 
 // === Show quiz after clicking start ===
 document.getElementById("start-quiz-btn").addEventListener("click", ()=>{
