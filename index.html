@@ -185,18 +185,27 @@ h2 {
 </head>
 <body>
 
+<div id="initial-loading" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#ffffff;">
+  <h1 id="loading-text" style="font-family:sans-serif; color:#2e7d32;">loading</h1>
+  <div style="width:300px; height:12px; background:#c8e6c9; border-radius:6px; overflow:hidden; margin-top:20px;">
+    <div id="loading-progress" style="width:0%; height:100%; background:#2e7d32; transition:width 0.1s;"></div>
+  </div>
+</div>
+
+<div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#ffffff; text-align:center;">
+  <h1 style="color:#2e7d32; font-size:28px; max-width:90%;">ยินดีต้อนรับสู่ Herb Quests : ภารกิจลับถอดรหัสสมุนไพร</h1>
+  <button id="start-quiz-btn" style="margin-top:20px; padding:12px 20px; font-size:18px; background:#81c784; color:#fff; border:none; border-radius:8px; cursor:pointer;">
+    ดำเนินการถอดรหัส
+  </button>
+</div>
+
 <div id="falling-leaves"></div>
 
 <h2>🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
 
-<div id="quiz-container">
-  <div id="progress-bar-container">
-    <div id="progress-bar"></div>
-  </div>
-  <div id="question-number"></div>
-  <div id="question-text"></div>
-  <div id="options"></div>
-  <div id="message"></div>
+<div id="falling-leaves" style="display:none;"></div>
+<h2 id="quiz-title" style="display:none;">🌱 ตอบอะไรไหนใครรู้~ ~ 🍀</h2>
+<div id="quiz-container" style="display:none;">
 </div>
 
 <div id="loading-screen" style="display: none; text-align: center; padding: 50px; position: relative;">
@@ -209,6 +218,47 @@ h2 {
 </p>
 <div id="loading-tip" style="text-align:center; margin-top: 15px; font-weight: normal; font-size: 16px; color: #2e7d32; opacity: 0; transition: opacity 1s;"></div>
 
+<script>
+// === NEW PART: initial loading ===
+(function(){
+  let dotCount = 0;
+  const loadingText = document.getElementById("loading-text");
+  const progressBar = document.getElementById("loading-progress");
+  const loadingDiv = document.getElementById("initial-loading");
+  const welcomePage = document.getElementById("welcome-page");
+
+  // Dots animation
+  const dotInterval = setInterval(()=>{
+    dotCount = (dotCount % 3) + 1;
+    loadingText.textContent = "loading" + ".".repeat(dotCount);
+  }, 500);
+
+  // Progress bar filling
+  let progress = 0;
+  const progressInterval = setInterval(()=>{
+    progress += 2; // 2% every 0.1s → 5s total
+    progressBar.style.width = progress + "%";
+    if(progress >= 100){
+      clearInterval(progressInterval);
+      clearInterval(dotInterval);
+      // After loading complete → show welcome page
+      loadingDiv.style.display = "none";
+      welcomePage.style.display = "flex";
+    }
+  }, 100);
+})();
+
+// === Show quiz after clicking start ===
+document.getElementById("start-quiz-btn").addEventListener("click", ()=>{
+  document.getElementById("welcome-page").style.display = "none";
+  document.getElementById("falling-leaves").style.display = "block";
+  document.getElementById("quiz-title").style.display = "block";
+  document.getElementById("quiz-container").style.display = "block";
+  loadQuestion(); // Call your existing quiz start function
+});
+</script>
+
+  
 <script>
 const quizData = [
   {
