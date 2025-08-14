@@ -185,76 +185,77 @@ h2 {
 </head>
 <body>
 
-<div id="initial-loading" style="
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  background:transparent;
-  position:relative;
-">
-  <h1 id="loading-text" style="
-    font-family:sans-serif;
-    color:#2e7d32;
-    font-size:36px;
-    text-shadow: 0 0 5px #81c784;
-  ">🌿 กำลังโหลด... 🍃</h1>
-
-  <div style="
-    width:300px;
-    height:12px;
-    background:#c8e6c9;
-    border-radius:6px;
-    overflow:hidden;
-    margin-top:20px;
-  ">
-    <div id="loading-progress" style="
-      width:0%;
-      height:100%;
-      background:#2e7d32;
-      border-radius:6px;
-      transition: width 0.1s linear;
-    "></div>
+<div id="initial-loading">
+  <h1 id="loading-text">🌿 กำลังโหลด... 🍃</h1>
+  <div style="width:300px; height:12px; background:#c8e6c9; border-radius:6px; overflow:hidden; margin-top:20px;">
+    <div id="loading-progress" style="width:0%; height:100%; background:#2e7d32; border-radius:6px;"></div>
   </div>
+  <!-- falling leaves container -->
+  <div id="falling-leaves"></div>
+</div>
 
-  <!-- Optional: decorative emojis floating -->
-  <div style="position:absolute; top:10%; left:10%; font-size:24px;">🍃</div>
-  <div style="position:absolute; top:20%; right:15%; font-size:28px;">🌿</div>
-  <div style="position:absolute; bottom:15%; left:25%; font-size:22px;">✨</div>
+<div id="welcome-page" style="display:none; ...">
+  <h1>ยินดีต้อนรับสู่ Herb Quests</h1>
+  <button id="start-quiz-btn">ดำเนินการถอดรหัส</button>
 </div>
 
 <script>
-const loadingDiv = document.getElementById("initial-loading");
-const welcomePage = document.getElementById("welcome-page");
-const loadingText = document.getElementById("loading-text");
-const progressBar = document.getElementById("loading-progress");
+  // === INITIAL LOADING + FALLING LEAVES SCRIPT ===
 
-// Dots animation
-let dotCount = 0;
-const dotInterval = setInterval(() => {
-  dotCount = (dotCount % 3) + 1;
-  loadingText.textContent = "🌿 กำลังโหลด" + ".".repeat(dotCount) + " 🍃";
-}, 500);
+  const loadingDiv = document.getElementById("initial-loading");
+  const welcomePage = document.getElementById("welcome-page");
+  const loadingText = document.getElementById("loading-text");
+  const progressBar = document.getElementById("loading-progress");
 
-// Progress bar filling
-let progress = 0;
-const progressInterval = setInterval(() => {
-  progress += 2; // 2% every 0.1s → 5s total
-  progressBar.style.width = progress + "%";
+  // Dots animation
+  let dotCount = 0;
+  const dotInterval = setInterval(() => {
+    dotCount = (dotCount % 3) + 1;
+    loadingText.textContent = "🌿 กำลังโหลด" + ".".repeat(dotCount) + " 🍃";
+  }, 500);
 
-  if(progress >= 100){
-    clearInterval(progressInterval);
-    clearInterval(dotInterval);
-    // Hide loading and show welcome page
-    loadingDiv.style.display = "none";
-    welcomePage.style.display = "flex";
-    setTimeout(() => {
-      welcomePage.style.opacity = 1;
-      welcomePage.style.transform = "translateY(0)";
-    }, 50);
+  // Progress bar filling
+  let progress = 0;
+  const progressInterval = setInterval(() => {
+    progress += 2;
+    progressBar.style.width = progress + "%";
+    if(progress >= 100){
+      clearInterval(progressInterval);
+      clearInterval(dotInterval);
+      loadingDiv.style.display = "none";
+      welcomePage.style.display = "flex";
+      setTimeout(()=>{
+        welcomePage.style.opacity = 1;
+        welcomePage.style.transform = "translateY(0)";
+      }, 50);
+    }
+  }, 100);
+
+  // === FALLING LEAVES FOR LOADING SCREEN ===
+  let leavesOnScreen = 0;
+  const maxLeaves = 20;
+
+  function createLeaf() {
+    if (leavesOnScreen >= maxLeaves) return;
+    leavesOnScreen++;
+    const leaf = document.createElement('span');
+    leaf.classList.add('leaf');
+    leaf.textContent = ['🍂','🍃','🌿'][Math.floor(Math.random()*3)];
+    leaf.style.left = Math.random() * 100 + 'vw';
+    leaf.style.fontSize = (20 + Math.random() * 20) + 'px';
+    const duration = 5 + Math.random() * 5;
+    const delay = Math.random() * 5;
+    leaf.style.animationDuration = duration + 's';
+    leaf.style.animationDelay = delay + 's';
+    document.getElementById('falling-leaves').appendChild(leaf);
+
+    setTimeout(()=>{
+      leaf.remove();
+      leavesOnScreen--;
+    }, (duration + delay) * 1000);
   }
-}, 100);
+
+  setInterval(createLeaf, 1000);
 </script>
 
 <div id="welcome-page" style="display:none; flex-direction:column; align-items:center; justify-content:center; height:100vh; background:#ffffff; text-align:center; opacity:0; transform:translateY(20px); transition: opacity 1s ease, transform 1s ease;">
