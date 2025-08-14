@@ -340,37 +340,29 @@ h2 {
   }
 }, 100);
 
-document.getElementById("start-quiz-btn").addEventListener("click", ()=>{
+document.getElementById("start-quiz-btn").addEventListener("click", () => {
   const welcome = document.getElementById("welcome-page");
   welcome.style.opacity = 0;
   welcome.style.transform = "translateY(-20px)";
-  setTimeout(()=> welcome.style.display = "none", 500);
+  setTimeout(() => welcome.style.display = "none", 500);
 
-  const leaves = document.getElementById("falling-leaves");
   const quizTitle = document.getElementById("quiz-title");
   const quizContainer = document.getElementById("quiz-container");
 
-  leaves.style.display = "block";
   quizTitle.style.display = "block";
   quizContainer.style.display = "block";
 
-  quizTitle.style.opacity = 0;
-  quizTitle.style.transform = "translateY(-20px)";
-  quizContainer.style.opacity = 0;
-  quizContainer.style.transform = "translateY(20px)";
-
-  setTimeout(()=>{
-    quizTitle.style.transition = "opacity 0.8s ease, transform 0.8s ease";
+  setTimeout(() => {
     quizTitle.style.opacity = 1;
     quizTitle.style.transform = "translateY(0)";
-    quizContainer.style.transition = "opacity 0.8s ease, transform 0.8s ease";
     quizContainer.style.opacity = 1;
     quizContainer.style.transform = "translateY(0)";
 
-    currentQuestion = 0;
-    loadQuestion();
+    currentQuestion = 0;  // reset quiz
+    loadQuestion();        // show first question
   }, 50);
 });
+
 
 </script>
 
